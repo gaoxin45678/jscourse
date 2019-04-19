@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box{
+            width: 300px;
+            height: 400px;
+            border: 1px solid #000;
+            margin-top: 20px;
+        }
+        #box span{
+            background: yellow;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" name="" id="find">
+    <button id="btn">查找</button>
+    <input type="text" id="replace">
+    <button id="btn2">替换</button>
+    <div id="box">当地时间15日傍晚18时许，位于巴黎市中心、有着800多年历史的巴黎圣母院发生大火，整座建筑损毁严重。着火位置位于圣母院顶部塔楼，大火将整座建筑物的后半部分映得通红，滚滚浓烟冲向天空。大火迅速将圣母院塔楼的尖顶吞噬，很快，尖顶如被拦腰折断一般倒下，围观人群发出惊呼。</div>
+    <script>
+        const find = document.querySelector('#find');
+        const btn = document.querySelector('#btn');
+        const box = document.querySelector('#box');
+        const replace = document.querySelector('#replace');
+        const btn2 = document.querySelector('#btn2');
+        btn.onclick = function(){
+            let val = find.value;
+            if(box.innerText.includes(val)){
+                box.innerHTML = box.innerText.split(`${val}`).join(`<span>${val}</span>`);
+            }else{
+                alert('没有查询到该内容')
+            }
+            btn2.onclick = function(){
+            let cur = replace.value;
+            box.innerHTML = box.innerText.split(`${val}`).join(`<span>${cur}</span>`)
+            
+        }
+        }
+       
+        
+    </script>
+</body>
+</html>

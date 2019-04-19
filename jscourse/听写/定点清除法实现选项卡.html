@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        ul{
+            padding: 0;
+            overflow: hidden;
+
+        }
+        ul li{
+            width: 50px;
+            border: 1px solid #ccc;
+            list-style: none;
+            float: left;
+            cursor: pointer;
+        }
+       #box div{
+            border:1px solid #ccc;
+            width: 200px;
+            height: 100px;
+            display: none;
+        }
+        .active{
+            background: yellow;
+        }
+       #box .show{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li class="active">新闻</li>
+        <li>音乐</li>
+        <li>体育</li>
+    </ul>
+    <div id="box">
+        <div class="show">新浪</div>
+        <div>酷狗</div>
+        <div>CCTV5</div>
+    </div>
+
+    <script>
+        const lis = document.querySelectorAll('li');
+        const divs = document.querySelectorAll('#box div');
+        let len = lis.length;
+        let ind = lis[0]
+        for(let i = 0; i < len; i++){
+            lis[i].index = i
+            lis[i].onclick = function(){
+                ind.className = '';
+                divs[ind.index].className = '';
+                this.className = 'active';
+                divs[this.index].className= 'show';
+                ind = this;  
+               
+            }
+        }
+    </script>
+</body>
+</html>

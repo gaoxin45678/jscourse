@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // let age = 10;
+        // let obj = {
+        //     age: '珠峰',
+        //     fn: function () {
+        //         console.log(this.age)
+        //     }
+        // };
+        // let obj2 = {
+        //     f2: obj.fn,
+        //     age: 100
+        // }
+        // let f = obj.fn;
+        // f();
+        // obj.fn();
+        // obj2.f2();
+
+        // var age1 = 3000;
+        // var f2 = (a, b) => {
+        //     console.log(this.age1)
+        //     return a + b;
+        // };
+        // var f3 = function () {
+        //     console.log(this.age1)
+        // }
+        // var obj3 = {
+        //     age1: 300,
+        //     f: f2,
+        //     f3: f3
+        // };
+        // obj3.f(1, 2);
+        // obj3.f3()
+            var f1 = function(){
+                return () =>arguments[0]
+            }
+            var f2 = f1(100);
+            console.log(f2())
+
+    </script>
+</body>
+
+</html>

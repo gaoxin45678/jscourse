@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #txt,#box{
+            width: 300px;
+            height: 200px;
+            word-break:break-all;
+            /*或者
+            word-wrap:break-word */
+        }
+        #box{
+            border: 1px solid #000;
+            
+        }
+    </style>
+</head>
+<body>
+    <textarea name="" id="txt" cols="30" rows="10"></textarea>
+    <div id="box"></div>
+    <button id="btn">转移</button>
+    <script>
+        //获取元素
+        const txt = document.querySelector('#txt');
+        const box = document.querySelector('#box');
+        const btn = document.querySelector('#btn');
+       
+        btn.onclick = function(){ 
+            let html = '';
+        let timer = setInterval(() => {
+                if(txt.value){
+                    let val = txt.value[0]
+                txt.value = txt.value.substring(1)
+                html += val
+                box.innerHTML = html
+                }else{
+                    clearInterval(timer)
+                }
+                
+            }, 50);
+        }
+       
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #txt {
+            width: 200px;
+            height: 30px;
+        }
+
+        #btn {
+            width: 50px;
+            height: 30px;
+        }
+
+        #box {
+            width: 500px;
+            margin: 0 auto;
+        }
+
+        #tab {
+            margin-top: 20px;
+        }
+
+        #tab tr th,
+        #tab tr td {
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        #tab tr th button,
+        #tab tr td button {
+            width: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <input type="text" id="txt">
+        <button id="btn">添加</button>
+        <table border="1" cellspacing='0' cellpadding='0' id="tab">
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>文字</th>
+                    <th>上移</th>
+                    <th>下移</th>
+                    <th>删除</th>
+
+                </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+    </div>
+    <script>
+        //获取元素
+        const txt = document.querySelector('#txt');
+        const btn = document.querySelector('#btn');
+        const tbody = document.querySelector('#tbody');
+
+        let arr = [
+            {
+                id: 0,
+                text: '老大'
+            },
+            {
+                id: 1,
+                text: '老三'
+            }
+        ]
+        //刷新页面内容
+        function refresh() {
+            txt.focus()
+            let content = '';
+            for (let i = 0; i < arr.length; i++) {
+                content += `<tr>
+                    <td>${i}</td>
+                    <td>${arr[i].text}</td>
+                    <td><button class="up">↑</button></td>
+                    <td><button class="down">↓</button></td>
+                    <td><button class="remove">删除</button></td>
+                </tr>`
+            }
+            tbody.innerHTML = content;
+            const rms = document.querySelectorAll('.remove');
+            const ups = document.querySelectorAll('.up');
+            const downs = document.querySelectorAll('.down');
+            let len = rms.length;
+            let temp = 0;
+            for (let i = 0; i < len; i++) {
+                //点击删除
+                rms[i].onclick = function () {
+                    arr.splice(this.id, 1);
+                    refresh();
+                }
+                //点击上移
+                ups[i].onclick = function () {
+                    if (i > 0) {
+                        temp = arr[i].text;
+                        arr[i].text = arr[i - 1].text;
+                        arr[i - 1].text = temp;
+                    }
+                    refresh();
+                }
+                //点击下移
+                downs[i].onclick = function () {
+                    if (i < downs.length && arr[i+1]) {
+                        temp = arr[i].text;
+                        arr[i].text = arr[i + 1].text;
+                        arr[i + 1].text = temp;
+                        
+                    }
+                    refresh();
+                }
+            }
+        }
+        refresh();
+        //点击添加
+        btn.onclick = function () {
+            let val = txt.value;
+            content = '';
+            arr.push({
+                id: arr.length,
+                text: val
+            })
+            refresh();
+            txt.value = '';
+        }
+
+    </script>
+</body>
+
+</html>
