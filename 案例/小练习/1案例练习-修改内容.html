@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #content{
+            height: 30px;
+            line-height: 30px;
+        }
+        #box{
+            margin-top:10px;
+           display: none;
+        }
+       #text{
+           margin-right: 20px;
+       }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <span id="text">珠峰培训</span>
+        <button id="update">修改</button>
+    </div>
+    <div id="box">
+        <input type="text" id="change">
+        <button id="sure">确认</button>
+        <button id="cancel">取消</button>
+    </div>
+    <script>
+        //获取元素
+        const text=document.getElementById('text')
+        const update=document.getElementById('update')
+        const sure=document.getElementById('sure')
+        const cancel=document.getElementById('cancel')
+        const change=document.getElementById('change')
+        //当点击修改的时候让确认框显示出来，同时修改框隐藏
+        update.onclick = function(){
+            update.style.display='none';
+            box.style.display='block'
+            change.value=text.innerHTML
+            document.getElementById('change').focus();
+        }
+        //点击取消的时候恢复默认样式
+        cancel.onclick = function(){
+            update.style.display='inline-block';
+            box.style.display='none'
+        }
+        //点击确定的时候
+        sure.onclick = function(){
+            let cur = change.value
+            if(cur){//进行一个判断，如果输入的内容不为空，则修改为当前内容
+             text.innerHTML= change.value
+            }else{//如果输入的内容为空，则不做任何改变
+                text.innerHTML=text.innerHTML
+            }
+            //当修改提交后，确认框隐藏，修改框显示
+            box.style.display='none'
+            update.style.display='inline-block';
+        }
+    
+    </script>
+</body>
+</html>

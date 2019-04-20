@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    .bg0{
+        background: red;
+    }
+    .bg1{
+        background: pink;
+    }
+    .hover{
+        background: green;
+        color: black;
+    }
+    </style>
+</head>
+<body>
+    <ul id="list">
+        <li>jfakhajdflajfld</li>
+        <li>jfakhajdflajfld</li>
+        <li>jfakhajdflajfld</li>
+        <li>jfakhajdflajfld</li>
+        <li>jfakhajdflajfld</li>
+        <li>jfakhajdflajfld</li>
+        <li>jfakhajdflajfld</li>
+        <li>jfakhajdflajfld</li>
+        <li>jfakhajdflajfld</li>
+        <li>jfakhajdflajfld</li>
+    </ul>
+    <script>
+        var list=document.querySelectorAll('#list>li');
+        for(var i=0;i<list.length;i++){
+            var cur=`bg${i%2}`
+            list[i].bg=cur
+            list[i].className=`bg${i%2}`
+            list[i].onmouseover=function(){
+                this.className='hover'
+            }
+            list[i].onmouseout=function(){
+                this.className=this.bg
+            }
+        }
+    </script>
+</body>
+</html>

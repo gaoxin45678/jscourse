@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>始终显示在网页顶部的导航菜单</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .header-wrap {
+            width: 100%;
+        }
+
+        .header-hd {
+            width: 980px;
+            height: 150px;
+            margin: 0 auto;
+            background-color: #ccc;
+        }
+
+        .header-bd {
+            width: 980px;
+            height: 40px;
+            margin: 0 auto;
+            background-color: green;
+        }
+
+        .fixed {
+            position: fixed;
+            width: 100%;
+        }
+
+        .fixed .header-hd {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body style="height:3000px;">
+    <div id="header-wrap" class="header-wrap">
+        <div class="header-hd"></div>
+        <div class="header-bd"></div>
+    </div>
+    <script type="text/javascript">
+        window.onload = function () {
+            function adsorption() {
+                var headerWrap = document.getElementById('header-wrap');
+                var scrollTop = 0;
+                window.onscroll = function () {
+                    scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+                    console.log(scrollTop)
+                    if (scrollTop > 100) {
+                        headerWrap.className = 'fixed';
+                    } else {
+                        headerWrap.className = 'header-wrap';
+                    }
+                }
+            }
+            adsorption();
+        }
+    </script>
+</body>
+
+</html>

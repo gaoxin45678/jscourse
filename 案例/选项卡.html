@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #tank {
+            width: 500px;
+            margin: 50px auto;
+        }
+
+        #box {
+            overflow: hidden;
+            position: relative;
+            top: 1px;
+        }
+        #box li {
+            list-style: none;
+            float: left;
+            margin-right: 20px;
+            width: 80px;
+            height: 40px;
+            font-size: 16px;
+            line-height: 40px;
+            text-align: center;
+            color: black;
+            font-weight: 700;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+        #tank div {
+            width: 400px;
+            height: 150px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            color: black;
+            text-align: center;
+            line-height: 150px;
+            display: none;
+        }
+        #box li.active {
+            background: yellow;
+            border-bottom-color: #fff;
+            color: rgb(17, 224, 231);
+        }
+        #tank div.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="tank">
+        <ul id="box">
+            <li class="active">音乐</li>
+            <li>电影</li>
+            <li>综艺</li>
+        </ul>
+        <div class="active">多远都要在一起</div>
+        <div>比悲伤更悲伤的故事</div>
+        <div>妻子的浪漫旅行</div>
+    </div>
+    <script>
+        var box =document.getElementById('box')
+        var list=box.getElementsByTagName('li')
+        var tank =document.getElementById('tank')
+        var divList=tank.getElementsByTagName('div')
+
+        for(var i=0;i<list.length;i++){
+            list[i].index= i
+            list[i].onclick=function(){
+                for(var k=0;k<list.length;k++){
+                    list[k].className=''
+                    divList[k].className=''
+                }
+                this.className='active'
+                divList[this.index].className='active'
+            }
+        }
+    </script>
+</body>
+
+</html>

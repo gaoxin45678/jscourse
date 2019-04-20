@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #ul>li {
+            list-style: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        全选 :<input type="checkbox" name="r" id="radio">
+    </div>
+    <ul id="ul">
+        <!-- <li><input type="checkbox" /></li>
+        <li><input type="checkbox" /></li>
+        <li><input type="checkbox" checked/></li> -->
+    </ul>
+    <script>
+        const ul = document.getElementById('ul');
+        const lis = document.querySelectorAll('#ul>li');
+        const radio = document.getElementById('radio')
+
+
+        let num = [1, 2, 3, 4, 5, 6, 7];
+        function fn() {
+            let html = '';
+            num.forEach(function (item, i) {
+                html += `<li><input type="checkbox" }/>${item}</li>`
+            });
+            ul.innerHTML = html;
+        };
+        fn();
+        const ins = document.querySelectorAll('#ul input')
+        let onOff = true;
+        radio.onclick = function () {
+            console.log(onOff)
+            if (onOff == false) {    
+                for(let i= 0;i<num.length;i++ ){
+                    ins[i].checked=false
+                }
+            }
+            if (onOff == true) {
+                for(let i= 0;i<num.length;i++ ){
+                    ins[i].checked=true;
+                }
+                
+            }
+            onOff = !onOff
+
+        }
+        console.log(onOff)
+
+        // if (onOff) {
+        //     let html = '';
+        //     num.forEach(function (item, i) {
+        //         html += `<li><input type="checkbox" checked}/>${item}</li>`
+        //     });
+        //     ul.innerHTML = html;
+        // }
+
+    </script>
+</body>
+
+</html>

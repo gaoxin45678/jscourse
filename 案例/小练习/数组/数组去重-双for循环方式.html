@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var arr=[1,2,2,2,3,3,4,2,1,4,1]
+        function uniq(ary){
+            //克隆一个新数组，操作新数组，以免后面会用到原数组
+            ary = arr.slice()
+            //外层循环负责取出当前项
+            for(var i=0;i<ary.length;i++){
+                var cur = ary[i]
+                //内层循环负责取出当强项的后一项
+                for(var j=i+1;j<ary.length;){
+                    cur===ary[j]?ary.splice(j,1):j++;
+                }
+            }
+            return ary
+        }
+        console.log(uniq())
+        
+    </script>
+</body>
+</html>

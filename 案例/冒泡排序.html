@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /*冒泡排序原理：用前一项和后一项进行比较，如果前一项大于后一项将
+        前一项和后一项进行位置互换，互换之后再和后一项比较
+        */
+        function bubblingSort(){
+            let arr = [23, 2, 4, 44, 46, 35, 7];
+            //外层循环控制比较的轮数，比较的次数比length少1
+            //内层循环控制的是每一轮和后面的数比较的次数，比较的次数是length-1-i
+            let len = arr.length - 1;
+            //因为每一轮比较都需要arr的length，如果直接写arr.length-1，每一轮浏览器都要计算一下length的长度，
+            //这样比较耗性能，把length赋值给变量，这样可以优化性能
+            for (let i = 0; i < len; i++) {
+                for (let j = 0; j < len - i; j++) {
+                    if (arr[j] > arr[j + 1]) {
+                        let temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                    }
+                }
+            }
+            return arr;
+        }
+        console.log(bubblingSort())
+
+
+    </script>
+</body>
+
+</html>

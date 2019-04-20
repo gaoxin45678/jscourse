@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+       function sum(){
+           var total=0;
+           for (var i=0;i<arguments.length;i++){
+               var cur = Number(arguments[i])
+               if(!isNaN(cur)){
+                   total+=cur
+               }
+           }
+           return total;
+       }
+        console.log(sum(12,23,NaN,[12,23],null,undefined,'12'))
+        function sum(){
+            var total=0;
+            for(var i=0;i<arguments;i++){
+                var num=arguments[i]
+                if(typeof num==="number"&& !isNaN(num)){
+                    total+=num;
+                }
+            }
+            return total
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // function fe() {
+        let arr = [1, 2, 4, 3, 4]
+        let ary = [5, 6, 7, 4]
+        let len1 = arr.length
+        let len2 = ary.length
+        for (let i = 0; i < len1; i++) {
+            for (let j = 0; j < len2; j++) {
+                if (arr[i] === ary[j]) {
+                    arr.splice(i);
+                    ary.splice(j)
+                } 
+            }
+            for(let k = i+1; k <len1;){
+                if(arr[i]===arr[k]){
+                    arr.splice(k,1)
+                }
+                k++;
+            }
+        }
+        console.log(arr, ary)
+        // }
+    </script>
+</body>
+
+</html>

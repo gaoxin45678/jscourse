@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        ul {
+            overflow: hidden;
+
+        }
+
+        ul li {
+            list-style: none;
+            float: left;
+            width: 70px;
+            height: 50px;
+            line-height: 50px;
+            margin-right: 30px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        div {
+            width: 400px;
+            height: 200px;
+            border: 1px solid #ccc;
+            line-height: 200px;
+            text-align: center;
+            display: none;
+        }
+
+        .active {
+            background: yellow;
+        }
+
+        .show {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <ul>
+            <li class="active">新闻</li>
+            <li>体育</li>
+            <li>音乐</li>
+        </ul>
+    </header>
+    <section>
+        <div class="show">最新新闻</div>
+        <div>体育消息</div>
+        <div>最新音乐</div>
+    </section>
+    <script>
+        //先获取所有的li 和所有的div
+        const lis = document.querySelectorAll('li');
+        const divs = document.querySelectorAll('div');
+        let len = lis.length;
+        function tabControl() {
+            //利用for循环给所有的li绑定点击事件
+            for (var i = 0; i < len; i++) {
+                lis[i].index = i;
+                lis[i].onclick = function () {
+                    //点击的时候先把所有li和的class清空，再给当前点击的这个
+                    //li和对应的div添加上class名
+                    for (var j = 0; j < len; j++) {
+                        lis[j].className = '';
+                        divs[j].className = '';
+                    }
+                    this.className = 'active';
+                    divs[this.index].className = 'show';
+                }
+
+            }
+        }
+        //第二种方式:循环时利用let形成块级作用域的特点
+        function tabControl2() {
+            for (let i = 0; i < len; i++){
+                lis[i].onclick = function(){
+                    for(let j = 0; j < len; j++){
+                        lis[j].className = '';
+                        divs[j].className = '';
+                    }
+                    this.className = 'active';
+                    divs[i].className = 'show';
+                }
+            }
+        }
+        tabControl2()
+    </script>
+</body>
+
+</html>

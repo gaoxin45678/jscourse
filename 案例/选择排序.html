@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var arr = [1, 4, 2, 11, 9, 6, 7]
+        function select(ary) {
+            ary = arr.slice()
+            for (var i = 0; i < ary.length - 1; i++) {
+                var min = i
+                for (var j = i + 1; j < ary.length; j++) {
+                    if (ary[j] < ary[min]) {
+                        min = j
+                    }
+                }
+                var temp = ary[i]
+                ary[i] = ary[min]
+                ary[min] = temp
+            }
+            return ary
+        }
+        console.log(select(arr))
+
+
+
+    </script>
+</body>
+
+</html>

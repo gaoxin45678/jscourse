@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box {
+            position: relative;
+        }
+
+        #box div {
+            width: 50px;
+            height: 50px;
+            background: url("1.png") 0 0 no-repeat;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+    </div>
+    <script>
+        const box = document.getElementById('box');
+        //定义一个空字符串用来承接循环生成的div
+        let html = '';
+        //外层循环控制行数
+        for (let i = 0; i < 10; i++) {
+            //内层循环控制列数
+            for (let j = 0; j < 10; j++) {
+                html += '<div style="top:' + i * 55 + 'px;left:' + j * 55 + 'px"></div>'
+            }
+        }
+        box.innerHTML = html;
+        const divs = document.querySelectorAll('#box div')
+        let arr = []
+        let index = 1
+        let ary = ["1.png", "2.png", "3.png"]
+        //循环给每个div绑定鼠标滑入事件
+        for (let i = 0; i < divs.length; i++) {
+            divs[i].onmouseover = function () {
+                this.style.backgroundPosition = '-' + this.style.left + ' ' + '-' + this.style.top
+                let cur = this.ind = i
+                //把自定义属性存到数组中，避免重复
+                if (arr.indexOf(cur) === -1) {
+                    arr.push(cur)
+                    // console.log(arr)
+                    // console.log(arr.length)
+                }
+                //切换图片的条件
+                if (arr.length >= 80) {
+                    for (let k = 0; k < divs.length; k++) {
+                        divs[k].style.background = `url("${index > ary.length-1 ? ary[0] : ary[index]}") 0 0 no-repeat`
+                        arr.length = 0
+                    }
+                    index > ary.length-1 ? index = 1 : index++
+                    console.log(index)
+                }
+            }
+        }
+
+
+
+
+    </script>
+</body>
+
+</html>

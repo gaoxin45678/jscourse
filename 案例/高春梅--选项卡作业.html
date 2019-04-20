@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #headBox {
+            width: 500px;
+            margin: 50px auto;
+        }
+
+        #box {
+            overflow: hidden;
+            position: relative;
+            top: 1px;
+        }
+
+        #box li {
+            list-style: none;
+            float: left;
+            width: 80px;
+            height: 40px;
+            line-height: 40px;
+            font-size: 16px;
+            font-weight: 700;
+            color: black;
+            text-align: center;
+            letter-spacing: 4px;
+            border: 1px solid #ccc;
+            margin-right: 30px;
+            cursor: pointer;
+        }
+
+        #headBox div {
+            width: 400px;
+            height: 150px;
+            font-size: 16px;
+            color: black;
+            border: 1px solid #ccc;
+            line-height: 150px;
+            text-align: center;
+            display: none;
+        }
+
+        #box li.active {
+            border-bottom-color: #fff;
+            background: yellow;
+            color: gray;
+        }
+
+        #headBox div.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="headBox">
+        <ul id="box">
+            <li class="active">音乐</li>
+            <li>电视剧</li>
+            <li>综艺</li>
+        </ul>
+        <div class="active">多想在平庸的生活拥抱你</div>
+        <div>都挺好</div>
+        <div>妻子的浪漫旅行</div>
+    </div>
+    <script>
+        // 获取页面中的所有li和div
+        var list = document.querySelectorAll('li');
+        var divList = document.querySelectorAll('#headBox>div');
+        //外层循环给每个li绑定点击事件
+        for (var i = 0; i < list.length; i++) {
+            // 将此时循环中的i利用自定义属性保存下来，后面给div绑定className时做为索引使用
+            list[i].index = i;
+            // 当点击li时触发的点击事件
+            list[i].onclick = function () {
+                // 当点击li时先利用for循环将所有li和div的类名都清空
+                for (var k = 0; k < list.length; k++) {
+                    list[k].className = '';
+                    divList[k].className = '';
+                }
+                // 清空后给点击到的li和对应的div加上类名
+                this.className = 'active';
+                // 这里不能直接用divList[i].className='active',因为当点击的时候循环已经结束i始终等于3
+                // 并不能达到我们想要的效果
+                divList[this.index].className = 'active';
+
+            }
+        }
+    </script>
+</body>
+
+</html>

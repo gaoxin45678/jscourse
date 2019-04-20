@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div{
+            width: 300px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <p id="con">“截至目前，中国已确认18例超级真菌临床感染病例，这里说的‘超级真菌’指的是耳念珠菌。我们还在持续监测，但总体上还没有出现美国那样的爆发性流行感染。”4月8日，中国工程院院士、第二军医大学长征医院皮肤科教授廖万清告诉《中国新闻周刊》。
+
+            《纽约时报》4月6日报道，纽约市西奈山医院去年5月为一名老年男子做腹部手术时，发现他感染了一种“神秘而致命”的真菌，医院迅速将其隔离在重症监护室。该男子最终在住院90天后死亡，但这种致命的真菌却顽强地存活下来。病房很多地方都遭到了入侵，院方为此对墙壁、病床、门、水槽、电话都进行了特殊消毒，甚至拆除了部分天花板和地板。目前，这种名为耳念珠菌的多重耐药真菌在纽约、新泽西和伊利诺伊等12个州流行。
+            
+            “超级真菌能长时间存活于患者和医护人员的皮肤及医院设施表面，若感染控制措施不力，容易导致院内爆发性感染。”北京大学医学部检验学系主任、北京大学人民医院检验科主任王辉说，2018年在英国爆发的超级真菌感染，其罪魁祸首就是一只共用的体温计。</p>
+            <a href="javascript:" id="sh">收缩</a>
+    </div>
+    <script>
+        let sty = con.innerText
+        let onOff = true;
+        sh.onclick = function(){
+            if(onOff){
+                this.innerText = '展开'
+            }else{
+                this.innerText = '收缩'
+            }
+            onOff = !onOff
+        }
+    </script>
+</body>
+</html>

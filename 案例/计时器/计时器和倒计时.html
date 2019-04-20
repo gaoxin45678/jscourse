@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            width: 300px;
+            height: 200px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="timer">
+        <span id="timer_text"></span>
+        <button id="timer_btn">开始计时</button>
+    </div>
+    <div id="countDown">
+        <span id="countDown_text"></span>
+        <button id="countDowm_btn">开始倒计时</button>
+    </div>
+    <script>
+        const timer_btn = document.getElementById('timer_btn');
+        const timer_text = document.getElementById('timer_text');
+        const countDown_text = document.getElementById('countDown_text');
+        const countDowm_btn = document.getElementById('countDowm_btn');
+        function getTime() {
+        }
+        //点击按钮开始计时，再次点击同时计时
+        function timer() {
+            let onOff = true;
+            timer_btn.onclick = function () {
+                this.innerText = onOff ? '停止计时' : '开始计时'
+                onOff = !onOff
+
+            }
+        }
+        timer()
+        //倒计时
+        function down() {
+            let onOff = true;
+            countDowm_btn.onclick = function () {
+                this.innerText = onOff ? '停止倒计时' : '开始倒计时'
+                onOff = !onOff
+
+            }
+        }
+        down()
+    </script>
+</body>
+
+</html>

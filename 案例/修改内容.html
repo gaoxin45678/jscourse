@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box {
+            height: 50px;
+            line-height: 50px;
+            margin: 10px;
+        }
+        #mBox {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <span id="tex">珠峰培训</span>
+        <button id="update">修改</button>
+    </div>
+    <div id="mBox">
+        <input type="text" name="" id="content">
+        <button id="submit">确定</button>
+        <button id="cancel">取消</button>
+    </div>
+    <script>
+        //获取需要操作的元素
+        const update=document.getElementById('update')
+        const mBox=document.getElementById('mBox')
+        const tex=document.getElementById('tex')
+        const content=document.getElementById('content')
+        const submit=document.getElementById('submit')
+        const cancel=document.getElementById('cancel')
+        //当点击修改按钮的时候mBox显示出来
+        update.onclick=function(){
+            mBox.style.display='inline-block'
+            update.style.display='none'
+            //让输入框默认显示内容是修改前的显示内容
+            content.value=tex.innerHTML
+            //光标自动定位到输入框
+            document.getElementById('content').focus()
+        }
+        //当点击取消按钮的时候返回原状态
+        cancel.onclick=function(){
+            mBox.style.display='none'
+            update.style.display='inline-block'
+        }
+        //当点击确定的时候把原来的内容修改为输入框内的内容
+        submit.onclick=function(){
+            if(content.value){
+                tex.innerHTML=content.value
+            }
+            mBox.style.display='none'
+            update.style.display='inline-block'
+        }
+    </script>
+</body>
+
+</html>

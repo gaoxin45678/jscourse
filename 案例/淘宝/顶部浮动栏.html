@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8" />
+    <title>fixed仿淘宝商品列表顶部浮动工具栏效果</title>
+    <meta name="author" content="走起来" />
+    <meta name="copyright" content="阿里西西网页特效演示 js.alixixi.com" />
+
+    <!-- style begin -->
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        img {
+            border: none;
+        }
+
+        body {
+            background: #fff;
+            font: 12px/1.5 tahoma, arial, 宋体b8b\4f53;
+        }
+
+        a {
+            text-decoration: none;
+            color: #36C;
+        }
+
+        a:hover {
+            color: red;
+            text-decoration: none;
+        }
+
+        .filter-tools-box {
+            background-color: white;
+            z-index: 90;
+            width: 750px;
+            margin: 0 auto;
+        }
+
+        .filter-follow {
+            position: fixed;
+            width: 750px;
+            top: 0;
+            left: 50%;
+            margin-left: -375px;
+        }
+
+        .filter-tools {
+            height: 20px;
+            padding: 7px 8px;
+            color: #404040;
+            background: #ddd;
+            border: 1px solid #CCC;
+            border-top: none;
+            position: relative;
+            z-index: 105;
+        }
+
+        .filter-tools li {
+            display: inline;
+            float: left;
+        }
+
+        .filter-tools .thumb-mode a {}
+
+        .filter-tools .mode a {
+            display: block;
+            width: 64px;
+            height: 18px;
+            overflow: hidden;
+            padding: 0 0 0 20px;
+            text-decoration: none;
+            border: 1px solid #CCC;
+        }
+
+        .filter-tools .thumb-mode a:hover {}
+
+        .filter-tools .mode a:hover {
+            color: #404040;
+            border: 1px solid #308ED1;
+        }
+
+
+        .filter-tools .order {
+            position: relative;
+            z-index: 1;
+            margin-left: 20px;
+        }
+
+        .filter-tools .order .label {
+            height: 20px;
+            margin-right: 4px;
+            line-height: 20px;
+            line-height: 22px 9;
+            _line-height: 18px;
+        }
+
+        .filter-tools .order .label,
+        .filter-tools .order .select-item {
+            display: inline;
+            float: left;
+            color: #404040;
+        }
+
+        .filter-tools .order .select-item {
+            width: 94px;
+        }
+
+        .filter-tools .order .item-list {
+            left: 28px;
+            width: 120px;
+        }
+
+        .item-list {
+            display: none;
+            position: absolute;
+            top: 19px;
+            left: 0;
+            overflow: hidden;
+            background: white;
+            border: 1px solid #A6A6A6;
+        }
+
+        .filter-tools .order .item-list li {
+            width: 100%;
+            height: 22px;
+            overflow: hidden;
+            padding: 0;
+            line-height: 22px;
+            line-height: 24px 9;
+            _line-height: 22px;
+            border-bottom: 1px solid #D9E9FB;
+        }
+
+        .filter-tools .order .by-price-asc a {}
+
+        .filter-tools .order .by-price-desc a {}
+
+        .filter-tools .order .by-credit-desc a {}
+
+        .filter-tools .order .by-sale-desc a {}
+
+        .filter-tools .order .item-list .selected a {
+            cursor: default;
+            background-color: #EEE;
+        }
+
+        .filter-tools .order .item-list a:hover {
+            background-color: #EEE;
+        }
+
+        .filter-tools .order .item-list a {
+            display: block;
+            width: 92px;
+            margin: 1px 0;
+            padding-left: 28px;
+            text-decoration: none;
+            color: black;
+        }
+
+        .filter-tools .way {
+            margin-left: 20px;
+        }
+
+        .filter-tools .way .by-credit,
+        .filter-tools .way .by-sale {}
+
+        .filter-tools .way .by-credit:hover,
+        .filter-tools .way .by-sale:hover {}
+
+        .filter-tools .way a {
+            display: inline;
+            float: left;
+            width: 42px;
+            height: 18px;
+            overflow: hidden;
+            margin-right: -1px;
+            padding: 0;
+            text-indent: 5px;
+            line-height: 18px;
+            line-height: 20px 9;
+            _line-height: 16px;
+            border: 1px solid #CCC;
+        }
+
+        .filter-tools .way .by-price {}
+
+        .filter-tools .way .by-price:hover {}
+
+        .filter-tools .way a:hover,
+        .filter-tools .by-credit-desc .by-credit,
+        .filter-tools .by-price-asc .by-price,
+        .filter-tools .by-price-desc .by-price,
+        .filter-tools .by-sale-desc .by-sale {
+            position: relative;
+            color: #404040;
+            border: 1px solid #308ED1;
+        }
+
+
+        .filter-tools .region {
+            position: relative;
+            width: 84px;
+            height: 20px;
+            margin-left: 5px;
+            z-index: 99999;
+        }
+
+        .filter-tools .region form {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 84px;
+            height: 20px;
+            overflow: hidden;
+            padding: 0 2px;
+        }
+
+        .filter-tools input {
+            width: 30px;
+            height: 15px;
+            margin: 0 2px;
+            font-size: 11px;
+            font-family: Arial;
+            border: 1px solid #B5B5B5;
+        }
+
+        .filter-tools .region .submit {
+            width: 42px;
+            height: 20px;
+            overflow: hidden;
+            margin: 2px 0 0 41px;
+            white-space: nowrap;
+            cursor: pointer;
+            border: 1px solid #ccc;
+        }
+
+        .filter-tools .region .expand {
+            height: 44px;
+            background: #fff;
+            border: 1px solid #feaf17;
+        }
+
+        .filter-tools .seat {
+            position: relative;
+            margin-left: 24px;
+            z-index: 10000;
+        }
+
+        .filter-tools .seat .select-item {
+            width: 44px;
+        }
+
+        .filter-tools .select-item {
+            display: inline;
+            float: left;
+            height: 18px;
+            overflow: hidden;
+            padding: 0 21px 0 5px;
+            line-height: 18px;
+            line-height: 20px 9;
+            _line-height: 16px;
+            white-space: nowrap;
+            cursor: pointer;
+            border: 1px solid #A6A6A6;
+        }
+
+        .filter-tools .seat .item-list {
+            width: 200px;
+        }
+
+        .filter-tools .seat form {
+            position: absolute;
+            top: 106px;
+            left: 8px;
+            width: 160px;
+            overflow: hidden;
+        }
+
+        .filter-tools .seat button {
+            border: none;
+            width: 42px;
+            height: 20px;
+            overflow: hidden;
+            margin-left: 5px;
+            text-indent: -100px;
+            cursor: pointer;
+        }
+
+        .filter-tools .seat .text {
+            width: 90px;
+            height: 14px;
+            padding: 2px;
+            line-height: 14px;
+            color: gray;
+            border: 1px solid #949494;
+        }
+
+        .filter-tools .seat .text,
+        .filter-tools .seat button {
+            display: inline;
+            float: left;
+        }
+
+        .filter-tools .seat .all {
+            padding-top: 10px;
+            border-top: none;
+        }
+
+        .filter-tools .seat p {
+            width: 190px;
+            overflow: hidden;
+            padding: 5px;
+            border-top: 1px dotted gray;
+        }
+
+        .filter-tools .seat p .selected,
+        .filter-tools .seat p .selected:hover {
+            color: white;
+            background: #F50;
+        }
+
+        .filter-tools .seat p a {
+            display: inline;
+            float: left;
+            padding: 2px;
+            white-space: nowrap;
+        }
+
+        .filter-tools .seat .area a {
+            margin-right: 8px;
+        }
+
+        .filter-tools .seat .city {
+            padding-top: 34px;
+        }
+
+        .filter-tools .seat .city a {
+            width: 30px;
+            margin-left: 2px;
+        }
+
+        .filter-tools .seat .province a {
+            margin-right: 6px;
+        }
+
+        .filter-follow div.filter-close-btn {
+            display: block;
+        }
+
+        .filter-tools div.filter-close-btn {
+            bottom: -5px;
+            cursor: pointer;
+            height: 11px;
+            line-height: 10px;
+            overflow: hidden;
+            position: absolute;
+            right: -5px;
+            width: 28px;
+            display: none;
+        }
+
+        .back {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            color: #000;
+            text-shadow: 1px 1px 3px #999999;
+            text-decoration: none;
+            z-index: 99999;
+        }
+    </style>
+    <!-- style end -->
+
+    <script type="text/javascript">
+        function $(id) {/* 获取id */
+            return typeof id === "string" ? document.getElementById(id) : id;
+        }
+
+        (function (window, undefined) {
+            if (window.ZHJ) {
+                return;
+            }
+            var ZHJ = window.ZHJ = {};
+            ZHJ.classes = ZHJ.classes || {};
+            ZHJ.moveModules = ZHJ.moveModules || {};
+            ZHJ.version = '1.1.0 (2012-1-13)';
+            var flag = 1;
+
+            ZHJ.util = {
+                stopEvent: function (e) {
+                    e = e || window.event;
+                    if (e.stopPropagation) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                    } else {
+                        e.cancelBubble = true;
+                        e.returnValue = false;
+                    }
+                },
+                bind: function (foo, othis) {
+                    if (!foo || !othis) { return; };
+                    var args = Array.prototype.slice.call(arguments, 2);
+                    return function (e) { e = e || top.window.event || window.event; foo.apply(othis, args.concat(e)); };
+                },
+                addEvent: function (obj, sType, fFoo) {
+                    if (document.attachEvent) {
+                        obj.attachEvent('on' + sType, fFoo);
+                    } else {
+                        obj.addEventListener(sType, fFoo, false);
+                    }
+                },
+                delEvent: function (obj, sType, fFoo) {
+                    if (obj.detachEvent) {
+                        obj.detachEvent('on' + sType, fFoo);
+                    }
+                    else {
+                        obj.removeEventListener(sType, fFoo, false);
+                    }
+                },
+                addScrollEvent: function (ev) {//阻止滚轮事件
+                    var oEvent = ev || event;
+
+                    if (flag == '0') {
+                        oEvent.preventDefault();
+                    }
+                    else {
+
+                    }
+                }
+            };
+
+            ZHJ.appendStr = function (obj, html) {/* 以字符串的形式插入 */
+                var oDiv = document.createElement('div');
+                oDiv.innerHTML = html;
+                while (oDiv.childNodes.length) {
+                    obj.appendChild(oDiv.childNodes[0]);
+                }
+            }
+
+            ZHJ.getByClass = function (obj, sClass) {/*获取class样式*/
+                var aEle = obj.getElementsByTagName('*');
+                var i = 0;
+                var aResult = [];
+                for (i = 0; i < aEle.length; i++) {
+                    if (aEle[i].className == sClass) {
+                        aResult.push(aEle[i]);
+                    }
+                }
+                return aResult;
+            }
+
+            //获取元素的XY坐标
+            ZHJ.getXY = function (el) {
+                return document.documentElement.getBoundingClientRect && (function () {//取元素坐标，如元素或其上层元素设置position relative
+                    var pos = el.getBoundingClientRect();
+                    return { x: pos.left + document.documentElement.scrollLeft, y: pos.top + document.documentElement.scrollTop };
+                })() || (function () {
+                    var _x = 0, _y = 0;
+                    do {
+                        _x += el.offsetLeft;
+                        _y += el.offsetTop;
+                    } while (el = el.offsetParent);
+                    return { x: _x, y: _y };
+                })();
+            };
+            //获取元素节点
+            ZHJ.getNode = {
+                firstChild: function (obj) {
+                    return obj.firstElementChild || obj.firstChild;
+                },
+                nextSibling: function (obj) {
+                    return obj.nextElementSibling || obj.nextSibling;
+                }
+            };
+            //数组操作
+            ZHJ.classes.arryOperate = {
+                indexOF: function (s, a) {
+                    for (var i = 0; i < a.length; i++) if (s == a[i]) return i;
+                    return -1;
+                },
+                del: function (a, b) {
+                    for (var i = 0; i < a.length; i++) {
+                        b.splice(this.indexOF(a[i], b), 1)
+                    }
+                    return b
+                }
+            };
+
+            ZHJ.classes.doWhileExists = function (id, foo) {//确认id是否从在，从在转对象
+                var dTmp = document.getElementById(id);
+                if (dTmp) { foo(dTmp); }
+            };
+            //滚动条
+            ZHJ.classes.adjustScrollTop = function (id) {
+                var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+                if (scrollTop == 0) {
+                    ZHJ.cssStyle(id, 'marginTop', parseFloat(ZHJ.cssStyle(id, 'marginTop')));
+                }
+                else {
+                    ZHJ.cssStyle(id, 'marginTop', -parseInt(parseFloat(ZHJ.cssStyle(id, 'height')) / 2) - 10);
+                    if (ZHJ.cssStyle(id, 'position') == 'fixed') {
+                        if (-1 != window.navigator.userAgent.indexOf('MSIE 6.0') && -1 == window.navigator.userAgent.indexOf('MSIE 7.0') && -1 == window.navigator.userAgent.indexOf('MSIE 8.0')) {
+                            ZHJ.cssStyle(id, 'position', 'absolute');
+                            ZHJ.cssStyle(id, 'marginTop', parseFloat(ZHJ.cssStyle(id, 'marginTop')) + scrollTop);
+                        } else {
+                            ZHJ.cssStyle(id, 'marginTop', parseFloat(ZHJ.cssStyle(id, 'marginTop')));
+                        }
+                    } else if (ZHJ.cssStyle(id, 'position') == 'absolute') {
+                        ZHJ.cssStyle(id, 'marginTop', parseFloat(ZHJ.cssStyle(id, 'marginTop')) + scrollTop);
+                    }
+
+                }
+            };
+
+            ZHJ.classes.Xhr = function (method, url, async, data, callback) {//ajax
+                var x;
+                //var states = ["正在初始化……", "正在初始化请求……成功！正在发送请求……", "成功！正在接收数据……", "完成！正在解析数据……", "完成！"];
+                if (window.XMLHttpRequest) {
+                    x = new XMLHttpRequest();
+                    x.open(method, url, async);
+                    x.onreadystatechange = function () {
+                        if (x.readyState === 4) {
+                            if (x.status === 200) {
+                                var data = {
+                                    text: x.responseText,
+                                    xml: x.responseXML
+                                };
+                                callback.call(this, data);
+                                setTimeout(function () {//延时关闭
+                                }, 200);
+                            }
+                            else {
+
+                            }
+                        }
+                    }
+                    if (method.toLowerCase() === "post") {
+                        x.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    }
+                    x.send(data);
+                }
+                else {
+
+                }
+                return x;
+            };
+
+            ZHJ.cssStyleCss3 = function (obj, name, value) {
+                obj.style['Webkit' + name.charAt(0).toUpperCase() + name.substring(1)] = value;
+                obj.style['Moz' + name.charAt(0).toUpperCase() + name.substring(1)] = value;
+                obj.style['ms' + name.charAt(0).toUpperCase() + name.substring(1)] = value;
+                obj.style['O' + name.charAt(0).toUpperCase() + name.substring(1)] = value;
+                obj.style[name] = value;
+            };
+
+            ZHJ.cssStyle = function (obj, attr, value) {/* 获取CSS值  给CSS赋值 */
+                if (arguments.length == 2)
+                    return obj.currentStyle ? obj.currentStyle[attr] : document.defaultView.getComputedStyle(obj, false)[attr];
+                else if (arguments.length == 3)
+                    switch (attr) {
+                        case 'width':
+                        case 'height':
+                        case 'paddingLeft':
+                        case 'paddingTop':
+                        case 'paddingRight':
+                        case 'paddingBottom':
+                            value = Math.max(value, 0);
+                        case 'left':
+                        case 'top':
+                        case 'right':
+                        case 'bottom':
+                        case 'marginLeft':
+                        case 'marginTop':
+                        case 'marginRight':
+                        case 'marginBottom':
+                            obj.style[attr] = value + 'px';
+                            break;
+                        case 'opacity':
+                            obj.style.filter = "alpha(opacity:" + value + ")";
+                            obj.style.opacity = value / 100;
+                            break;
+                        default:
+                            obj.style[attr] = value;
+                    }
+
+                return function (attr_in, value_in) { ZHJ.cssStyle(obj, attr_in, value_in) };
+            }
+            /*集合运动和弹性的框架
+             startMove函数
+              obj:运动的对象
+              oTarget:哪些属性在变化，json格式
+              iType:运动的格式
+               BUFFER:平滑运动
+               FLEX  :弹性运动
+              fnCallBack:连续运动
+            */
+            var V_MOVE_TYPE = {
+                BUFFER: 1,
+                FLEX: 2
+            };
+
+            ZHJ.moveModules.startMove = function (obj, oTarget, iType, fnCallBack, fnDuring) {
+                var fnMove = null;
+                if (obj.timer) {
+                    clearInterval(obj.timer);
+                }
+                iType == 'FLEX' ? iType = V_MOVE_TYPE.FLEX : iType = V_MOVE_TYPE.BUFFER;//重新给iType赋值
+
+                switch (iType) {
+                    case V_MOVE_TYPE.BUFFER:
+                        fnMove = ZHJ.moveModules.doMoveBuffer;
+                        break;
+                    case V_MOVE_TYPE.FLEX:
+                        fnMove = ZHJ.moveModules.doMoveFlex;
+                        break;
+                }
+
+                obj.timer = setInterval(function () {
+                    fnMove(obj, oTarget, fnCallBack, fnDuring);
+                }, 15);
+            };
+
+            ZHJ.moveModules.doMoveBuffer = function (obj, oTarget, fnCallBack, fnDuring) {
+                var bStop = true;
+                var attr = '';
+                var speed = 0;
+                var cur = 0;
+
+                for (attr in oTarget) {
+                    //cur=ZHJ.cssStyle(obj, attr);
+
+                    cur = attr == 'opacity' ? parseInt(parseFloat(ZHJ.cssStyle(obj, attr)) * 100) : parseInt(ZHJ.cssStyle(obj, attr));//获取对应样式的值
+
+                    if (oTarget[attr] != cur) {
+                        bStop = false;
+
+                        speed = (oTarget[attr] - cur) / 8;//速度
+                        speed = (speed > 0) ? Math.ceil(speed) : Math.floor(speed);//向上向下取整
+
+                        ZHJ.cssStyle(obj, attr, cur + speed);//给对应样式负值
+                    }
+                }
+
+                if (fnDuring) fnDuring.call(obj);
+
+                if (bStop) {
+                    clearInterval(obj.timer);
+                    obj.timer = null;
+
+                    if (fnCallBack) fnCallBack.call(obj);
+                }
+            };
+
+            ZHJ.moveModules.doMoveFlex = function (obj, oTarget, fnCallBack, fnDuring) {
+                var bStop = true;//所有值是不是已经到达目标
+                var attr = '';
+                var speed = 0;
+                var cur = 0;
+
+                for (attr in oTarget) {
+                    if (!obj.oSpeed) obj.oSpeed = {};
+                    if (!obj.oSpeed[attr]) obj.oSpeed[attr] = 0;
+                    cur = attr == 'opacity' ? parseInt(parseFloat(ZHJ.cssStyle(obj, attr)) * 100) : parseInt(ZHJ.cssStyle(obj, attr));
+                    //cur=ZHJ.cssStyle(obj, attr);
+                    if (Math.abs(oTarget[attr] - cur) > 1 || Math.abs(obj.oSpeed[attr]) > 1) {
+                        bStop = false;
+
+                        obj.oSpeed[attr] += (oTarget[attr] - cur) / 8;
+                        obj.oSpeed[attr] *= 0.7;
+                        var maxSpeed = 65;
+                        if (Math.abs(obj.oSpeed[attr]) > maxSpeed) {
+                            obj.oSpeed[attr] = obj.oSpeed[attr] > 0 ? maxSpeed : -maxSpeed;
+                        }
+
+                        ZHJ.cssStyle(obj, attr, cur + obj.oSpeed[attr]);
+                    }
+                }
+
+                if (fnDuring) fnDuring.call(obj);
+
+                if (bStop) {
+                    clearInterval(obj.timer);
+                    obj.timer = null;
+                    if (fnCallBack) fnCallBack.call(obj);
+                }
+            };
+            //运动end--------
+        })(window);
+
+    </script>
+</head>
+
+<body style="height:2000px;">
+    <!-- html begin -->
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <div class="filter-tools-box" id="topfixed">
+        <ul class="filter-tools">
+            <li class="mode thumb-mode">
+                <a title="列表展示" href="javascript:void(0);" class="select-item">切换到列表</a>
+            </li>
+            <li id="J_FilterOrder" class="order ">
+                <span class="label">排序</span>
+                <span class="select-item j_dd_trigger">默认排序</span>
+                <ul class="item-list j_dd_panel">
+                    <li class="by-price-asc ">
+                        <a href="javascript:void(0);">价格从低到高</a>
+                    </li>
+                    <li class="by-price-desc ">
+                        <a href="javascript:void(0);">价格从高到低</a>
+                    </li>
+                    <li class="by-credit-desc ">
+                        <a href="javascript:void(0);">信用从高到低</a>
+                    </li>
+                    <li class="by-sale-desc ">
+                        <a href="javascript:void(0);">成交量从高到低</a>
+                    </li>
+                    <li class="by-default selected">
+                        <a href="javascript:void(0);">默认排序</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="way ">
+                <a href="javascript:void(0);" class="by-credit">信用</a>
+                <a href="javascript:void(0);" class="by-price">价格</a>
+            </li>
+            <li class="region">
+                <form action="javascript:void(0);" method="get" name="filterPriceForm" id="J_FilterPrice">
+                    <input type="text" name="filterPriceFrom" class="j_value">
+                    <span>-</span>
+                    <input type="text" name="filterPriceTo" class="j_value">
+                    <button type="submit" class="submit">确定</button>
+                </form>
+            </li>
+            <li id="J_Seat" class="seat">
+                <span class="select-item j_dd_trigger">所在地</span>
+                <div class="item-list j_dd_panel">
+                    <form method="get" action="javascript:void(0);">
+                        <input type="hidden" name="cat" id="cat" value="1623">
+                        <input type="hidden" name="sort" id="sort" value="commend">
+                        <input type="hidden" name="isprepay" id="isprepay" value="1">
+                        <input type="hidden" name="user_type" id="user_type" value="0">
+                        <input type="hidden" name="viewIndex" id="viewIndex" value="1">
+                        <input type="hidden" name="as" id="as" value="0">
+                        <input type="hidden" name="yp4p_page" id="yp4p_page" value="0">
+                        <input type="hidden" name="commend" id="commend" value="all">
+                        <input type="hidden" name="atype" id="atype" value="b">
+                        <input type="hidden" name="style" id="style" value="grid">
+                        <input type="hidden" name="s" id="s" value="0">
+                        <input type="hidden" name="path" id="path" value="16-1623">
+                        <input type="hidden" name="rr" id="rr" value="1">
+                        <input type="hidden" name="olu" id="olu" value="yes">
+                        <input type="hidden" name="isnew" id="isnew" value="2">
+                        <input type="hidden" name="smc" id="smc" value="1">
+                        <input type="hidden" name="spm" value="a2106.m874.1000206.d10002">
+                        <input type="text" name="loc" autocomplete="off" class="text j_value">
+                        <button type="submit">确定</button>
+                    </form>
+                    <div class="para">
+                        <p class="all"><a href="#" data-value="" class="selected">所有地区</a></p>
+                        <p class="area">
+                            <a href="#" data-value="江苏,浙江,上海">江浙沪</a>
+                            <a href="#" data-value="广州,深圳,中山,珠海,佛山,东莞,惠州">珠三角</a>
+                            <a href="#" data-value="香港,澳门,台湾">港澳台</a>
+                            <a href="#" data-value="北京,天津">京津</a>
+                            <a href="#" data-value="北京">北京</a>
+                            <a href="#" data-value="上海">上海</a>
+                            <a href="#" data-value="广州">广州</a>
+                            <a href="#" data-value="深圳">深圳</a>
+                            <a href="#"
+                                data-value="美国,英国,法国,瑞士,澳洲,新西兰,加拿大,奥地利,韩国,日本,德国,意大利,西班牙,俄罗斯,泰国,印度,荷兰,新加坡,其它国家">海外</a>
+                        </p>
+                        <p class="city">
+                            <a href="#" data-value="杭州">杭州</a>
+                            <a href="#" data-value="温州">温州</a>
+                            <a href="#" data-value="宁波">宁波</a>
+                            <a href="#" data-value="南京">南京</a>
+                            <a href="#" data-value="苏州">苏州</a>
+                            <a href="#" data-value="济南">济南</a>
+                            <a href="#" data-value="青岛">青岛</a>
+                            <a href="#" data-value="大连">大连</a>
+                            <a href="#" data-value="无锡">无锡</a>
+                            <a href="#" data-value="合肥">合肥</a>
+                            <a href="#" data-value="天津">天津</a>
+                            <a href="#" data-value="长沙">长沙</a>
+                            <a href="#" data-value="武汉">武汉</a>
+                            <a href="#" data-value=" 郑州"> 郑州</a>
+                            <a href="#" data-value="石家庄">石家庄</a>
+                            <a href="#" data-value="成都">成都</a>
+                            <a href="#" data-value="重庆">重庆</a>
+                            <a href="#" data-value="西安">西安</a>
+                            <a href="#" data-value="昆明">昆明</a>
+                            <a href="#" data-value="南宁">南宁</a>
+                            <a href="#" data-value="福州">福州</a>
+                            <a href="#" data-value="厦门">厦门</a>
+                            <a href="#" data-value="南昌">南昌</a>
+                            <a href="#" data-value="东莞">东莞</a>
+                            <a href="#" data-value="沈阳">沈阳</a>
+                            <a href="#" data-value="长春">长春</a>
+                            <a href="#" data-value="哈尔滨">哈尔滨</a>
+                        </p>
+                        <p class="province">
+                            <a href="#" data-value="安徽">安徽</a>
+                            <a href="#" data-value="福建">福建</a>
+                            <a href="#" data-value="甘肃">甘肃</a>
+                            <a href="#" data-value="广东">广东</a>
+                            <a href="#" data-value="广西">广西</a>
+                            <a href="#" data-value="贵州">贵州</a>
+                            <a href="#" data-value="海南">海南</a>
+                            <a href="#" data-value="河北">河北</a>
+                            <a href="#" data-value="河南">河南</a>
+                            <a href="#" data-value="湖北">湖北</a>
+                            <a href="#" data-value="湖南">湖南</a>
+                            <a href="#" data-value="江苏 ">江苏 </a>
+                            <a href="#" data-value="黑龙江">黑龙江</a>
+                            <a href="#" data-value="江西">江西</a>
+                            <a href="#" data-value="吉林">吉林</a>
+                            <a href="#" data-value="辽宁">辽宁</a>
+                            <a href="#" data-value="内蒙古">内蒙古</a>
+                            <a href="#" data-value="宁夏">宁夏</a>
+                            <a href="#" data-value="青海">青海</a>
+                            <a href="#" data-value="山东">山东</a>
+                            <a href="#" data-value="山西">山西</a>
+                            <a href="#" data-value="陕西">陕西</a>
+                            <a href="#" data-value="四川">四川</a>
+                            <a href="#" data-value="西藏">西藏</a>
+                            <a href="#" data-value="新疆">新疆</a>
+                            <a href="#" data-value="云南">云南</a>
+                            <a href="#" data-value="浙江">浙江</a>
+                            <a href="#" data-value="香港">香港</a>
+                            <a href="#" data-value="澳门">澳门</a>
+                            <a href="#" data-value="台湾">台湾</a>
+                        </p>
+                    </div>
+                </div>
+            </li>
+            <li class="way ">
+                <a class="by-sale" href="javascript:void(0);">成交</a>
+            </li>
+            <li>
+                <div class="filter-close-btn hidden" id="close_taobao">close</div>
+            </li>
+        </ul>
+
+    </div>
+
+    <input type="hidden" value="false" id="isShowSelectBox">
+    <!-- html end -->
+    <script type="text/javascript">
+        (function () {
+
+            var BoxY = 0;//工具栏在当前的位置
+            var windowST = 0;//获取滚动条
+            var filter_close_btn = '';//关闭按钮
+
+            ZHJ.FixedBox = function (id) {
+                BoxY = ZHJ.getXY(id).y;
+            };
+            /* 滚动条 */
+            ZHJ.taobaoTop = function (id) {
+                filter_close_btn = ZHJ.getByClass(id, 'filter-close-btn hidden')[0];
+                windowST = (document.compatMode && document.compatMode != "CSS1Compat") ? document.body.scrollTop : document.documentElement.scrollTop || window.pageYOffset;
+                if (windowST > BoxY) {
+                    id.className = 'filter-tools-box filter-follow';
+                    ZHJ.cssStyle(filter_close_btn, 'display', 'block');
+                } else {
+                    ZHJ.closeTaobao(id);
+                }
+            };
+            /* 关闭工具栏 */
+            ZHJ.closeTaobao = function (id) {
+                id.className = 'filter-tools-box';
+                ZHJ.cssStyle(filter_close_btn, 'display', 'none');
+            };
+            /* 为了添加和删除事件，所以要统一方法 */
+            ZHJ.taobaoTopZ = function () {
+                ZHJ.classes.doWhileExists('topfixed', ZHJ.taobaoTop);
+            };
+            /* 下拉框 */
+            ZHJ.selectItem = function (id) {
+                var selectItem = ZHJ.getByClass(id, 'select-item j_dd_trigger');//获取下拉框
+                var listItem = ZHJ.getByClass(id, 'item-list j_dd_panel');//获取下拉框
+                for (var i = 0; i < selectItem.length; i++) {
+                    (function (i) {
+                        ZHJ.util.addEvent(selectItem[i], 'mouseover', function () { ZHJ.selectItemHidden(listItem[i], 'display', 'block') });
+                        ZHJ.util.addEvent(selectItem[i], 'mouseout', function () { ZHJ.selectItemHidden(listItem[i], 'display', 'none') });
+                        ZHJ.util.addEvent(listItem[i], 'mouseover', function () { ZHJ.selectItemHidden(listItem[i], 'display', 'block') });
+                        ZHJ.util.addEvent(listItem[i], 'mouseout', function () { ZHJ.selectItemHidden(listItem[i], 'display', 'none') });
+                    })(i);
+                }
+            };
+            /* 价格区间搜索 */
+            ZHJ.jValue = function (id) {
+                var jValue = ZHJ.getByClass(id, 'j_value');//获取价格
+                for (var i = 0; i < jValue.length; i++) {
+                    (function (i) {
+                        ZHJ.util.addEvent(jValue[i], 'click', function () {
+                            jValue[i].parentNode.className = 'expand';
+                        });
+                    })(i);
+                }
+            };
+
+            ZHJ.selectItemHidden = function (obj, attr, value) {
+                ZHJ.cssStyle(obj, attr, value);
+            };
+
+            ZHJ.classes.doWhileExists('topfixed', ZHJ.FixedBox);//获取工具栏在页面的位置，并且判断id存不存在 
+            ZHJ.util.addEvent(window, 'scroll', ZHJ.taobaoTopZ);//添加事件，获取滚动条的高度
+
+            ZHJ.util.addEvent(window, 'click', function () {//关闭按钮，删除事件
+                ZHJ.classes.doWhileExists('topfixed', ZHJ.closeTaobao);
+                ZHJ.util.delEvent(window, 'scroll', ZHJ.taobaoTopZ);//删除事件
+            });
+
+            ZHJ.classes.doWhileExists('topfixed', ZHJ.selectItem);//下拉框
+
+            ZHJ.classes.doWhileExists('topfixed', ZHJ.jValue);//价格搜索区间
+        })();
+    </script>
+</body>
+
+</html>

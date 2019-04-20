@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box {
+            width: 400px;
+            height: 500px;
+            border: 1px solid #ccc;
+            margin: 0 auto;
+        }
+
+        #box li {
+            list-style: none;
+        }
+
+        #header p {
+            margin-left: 45px;
+        }
+
+        #tab {
+            overflow: hidden;
+        }
+
+        #tab li {
+
+            float: left;
+            margin-right: 20px;
+        }
+
+        #option li{
+            width: 70px;
+            line-height: 30px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <div id="header">
+            <p>你喜欢吃哪种水果：</p>
+            <ul id="tab">
+                <li><input type="checkbox" id="checkAll" />全选</li>
+            </ul>
+        </div>
+        
+        <ul id="option">
+            <li><input id="sel1" type="checkbox" /><label for="sel1">苹果</label></li>
+            <li><input id="sel2" type="checkbox" /><label for="sel2">香蕉</label></li>
+            <li><input id="sel3" type="checkbox" /><label for="sel3">鸭梨</label></li>
+            <li><input id="sel4" type="checkbox" /><label for="sel4">葡萄</label></li>
+            <li><input id="sel5" type="checkbox" /><label for="sel5">菠萝</label></li>
+            <li><input id="sel6" type="checkbox" /><label for="sel6">西瓜</label></li>
+            <li><input id="sel7" type="checkbox" /><label for="sel7">水蜜桃</label></li>
+            <li><input id="sel8" type="checkbox" /><label for="sel8">莲雾</label></li>
+            <li><input id="sel9" type="checkbox" /><label for="sel9">芒果</label></li>
+            <li><input id="sel0" type="checkbox" /><label for="sel0">草莓</label></li>
+            <!-- <li><input type="checkbox" /></li>
+            <li><input type="checkbox" /></li>
+            <li><input type="checkbox" checked/></li> -->
+        </ul>
+        <script>
+            const checkAll = document.getElementById('checkAll');
+            const selected = document.getElementById('selected');
+            const noSelected = document.getElementById('noSelected');
+            const filtrate = document.getElementById('filtrate');
+            const options = document.querySelectorAll('#option input');
+            const lis = document.querySelectorAll('#option>li')
+            //当点击全选的时候，所有选项全部被选中
+            //再次点击全部取消
+            function select(){
+                let onOff = true;
+                checkAll.onclick = function () {
+                    if (onOff) {
+                        for (let i = 0; i < options.length; i++) {
+                            options[i].checked = true;
+                        }
+
+                    } else {
+                        for (let i = 0; i < options.length; i++) {
+                            options[i].checked = false;
+
+                        }
+                    }
+                    onOff = !onOff
+                }
+            }
+            select()
+        </script>
+    </div>
+</body>
+
+</html>

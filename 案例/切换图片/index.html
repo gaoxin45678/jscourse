@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box{
+            width: 500px;
+            height: 500px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            position: relative;
+        }
+        #button{
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            
+        }
+        #button button{
+            cursor: pointer;
+        }
+        #random{
+            margin-right: 15px;
+        }
+        #left,#right{
+            font-size: 50px;
+            color: #fff;
+            position: absolute;
+            top:240px;
+            cursor: pointer;
+        }
+        #right{
+            left: 460px;
+        }
+        #picture{
+            width: 500px;
+            height: 460px;
+            background: url("1.png") 0 0 no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div id="button"> 
+            <button id="random">随机切换</button>
+            <button id="order">顺序切换</button>
+        </div>
+        <div id="picture"></div>
+        <span id="left">&lt;</span>
+        <span id="right">&gt;</span>
+    </div>
+    <script>
+        const random = document.getElementById('random')
+        const order = document.getElementById('order')
+        const picture = document.getElementById('picture')
+        const left = document.getElementById('left')
+        const right = document.getElementById('right')
+        let arr = ['1.png','2.png','3.png','4.png','5.png']
+        let ind = Math.round(Math.random(arr.length-1))
+        //点击左按钮
+        let index=0
+        left.onclick=function(){
+            picture.style.backgroundImage=`url(${index>=0?arr[index]:arr[0]})`
+            index>0?index--:index=0;
+            console.log(index)
+        }
+        //点击右按钮
+        right.onclick=function(){
+            picture.style.backgroundImage=`url(${index>arr.length-1?arr[arr.length-1]:arr[index+1]})`
+            // if(index>=5){
+            //     alert('到头啦')
+            // }
+
+            index>arr.length-1?index=arr.length-1:index++
+            
+            console.log(index)
+
+        }
+        //点击顺序按钮的时候
+
+        order.onclick=function(){
+
+        }
+        //点击随机按钮的时候
+        random.onclick=function(){
+
+        }
+    </script>
+</body>
+</html>

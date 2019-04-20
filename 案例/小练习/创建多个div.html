@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    div{
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+    }
+    </style>
+</head>
+<body>
+    <script>
+        var arr = ['red','pink','yellow','black','blue','orange','purple','brown','lavender','white'];
+        var str=''
+        for(var i=0;i<10;i++){
+            str+='<div style="background-color:'+arr[i]+';top:'+50+'px;left:'+(100+10)*i+'px"></div>'
+            console.log(str)
+        }
+        document.body.innerHTML=str
+    </script>
+</body>
+</html>

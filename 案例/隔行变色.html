@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box {
+            width: 300px;
+            height: 500px;
+            border: 1px solid #ccc;
+            margin: 0 auto;
+            padding: 10px;
+
+        }
+
+        #box li {
+            line-height: 30px;
+            list-style: none;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .bg0 {
+            background: pink;
+        }
+
+        .bg1 {
+            background: blue;
+        }
+
+        .bg2 {
+            background: yellow;
+        }
+
+        .bg3 {
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="box">
+        <li>1234567890-=-0987654321</li>
+        <li>1234567890-=-0987654321</li>
+        <li>1234567890-=-0987654321</li>
+        <li>1234567890-=-0987654321</li>
+        <li>1234567890-=-0987654321</li>
+        <li>1234567890-=-0987654321</li>
+        <li>1234567890-=-0987654321</li>
+        <li>1234567890-=-0987654321</li>
+        <li>1234567890-=-0987654321</li>
+        <li>1234567890-=-0987654321</li>
+    </ul>
+    <script>
+        const lis = document.querySelectorAll('#box li');
+        function col() {
+            let len = lis.length;
+            let onOff = true;
+            for (let i = 0; i < len; i++) {
+                if (i % 2 === 0) {
+                    lis[i].className = 'bg0'
+                } else {
+                    lis[i].className = 'bg1'
+                }
+                lis[i].onmouseover = function f1() {
+                    this.className = 'bg2'
+                }
+                lis[i].onmouseout = function () {
+                    this.className = `bg${i % 2}`
+                }
+                lis[i].onclick = function () {
+                   
+                    if (onOff) {
+                        this.className = 'bg3'
+                        this.onmouseover = null;
+                        this.onmouseout = null;
+                        
+                    } else {
+                        this.className = `bg${i % 2}`
+                        this.onmouseover = function () {
+                            this.className = 'bg2'
+                        }
+                        this.onmouseout = function () {
+                            this.className = `bg${i % 2}`
+                        }
+                       
+                    }
+                    console.log(onOff)
+                    onOff = !onOff
+                    console.log('点之后',onOff)
+                }
+            }
+        }
+        col()
+    </script>
+</body>
+
+</html>

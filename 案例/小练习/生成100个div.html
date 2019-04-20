@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .list {
+            width: 48px;
+            height: 48px;
+            border: 1px solid black;
+            display: inline-block;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+    <script>
+        const box = document.getElementById('box')
+        //外层循环控制行数
+        for (let i = 0; i < 10; i++) {
+            //内层循环控制每一行的个数
+            for (let j = 0; j < 10; j++) {
+                box.innerHTML += '<div class="list"></div>'
+            }
+            //每完成一次循环换行
+            box.innerHTML += '<br/>'
+        }
+    </script>
+</body>
+
+</html>

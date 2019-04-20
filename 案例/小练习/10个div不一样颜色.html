@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #box {
+
+            height: 100px;
+            position: relative;
+        }
+
+        .list {
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+            box-sizing: border-box;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+    <script>
+        /*
+            1.循环生成10个div
+            2.这10个div动态一行显示（定位的top，left是计算出来）
+            3.每个方块的颜色都不一样
+    
+            扩展:
+                生成100个div
+                每10个一行，共10行
+                
+        */
+        //获取元素
+        const box = document.getElementById('box')
+        let arr = ['red', 'pink', 'yellow', 'black', 'blue', 'orange', 'purple', 'brown', 'lavender', 'white'];
+        for (var i = 0; i < 10; i++) {
+            //循环十次，给每一个div添加同一个类名，获得同一个样式 
+            box.innerHTML += '<div class="list"></div>'
+            var divList = box.getElementsByTagName('div')
+            //将数组的对应项颜色赋值给每一个div
+            divList[i].style.background = arr[i]
+            //设置每个div之间的距离
+            divList[i].style.left = i * 110 + 'px'
+        }
+
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //提示用户输入班级人数，并转化为数组类型
+        let perCount = parseInt(prompt(`请输入班级人数`))
+        //定义一个空数组存储每个人的成绩
+        let perscores = [];
+        
+        //提示用户输入第i个人的成绩
+         //先将成绩添加到空数组，在循环数组中的值
+        for(let i = 0;i<perCount;i++){
+            perscores[perscores.length] = parseInt(prompt(`请输入第${i+1}个人的成绩`))
+        }
+        console.log('每个人的成绩',perscores)
+        let sum = 0;
+        let max=perscores[0];//最大值
+        let min = perscores[0];//最小值
+        for(let j=0;j<perscores.length;j++){
+              //求和
+              sum +=perscores[j]
+            //最大值
+            if(max<perscores[j]){
+                max=perscores[j];
+                console.log('max',max);
+            }
+            // console.log(perscores)
+            if(min>perscores[j]){
+               min=perscores[j];
+               console.log('min',min);
+            }
+        }
+        console.log('总成绩',sum);
+        console.log('平均分',sum/perscores.length);
+        console.log('最高分',max);
+        console.log('最低分',min);
+       
+    </script>
+</body>
+</html>

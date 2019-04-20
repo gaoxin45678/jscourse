@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //求1-100的累加值，碰到个位为3的数停止累加
+
+        // function getSum() {
+        //     let sum = 0;
+        //     for (let i = 1; i <= 100;) {
+        //         if (i % 10 === 3) {
+        //             i++;
+        //             continue;
+        //         }
+        //         sum += i;
+        //         i++;
+        //     }
+        //     return sum;
+        // }
+        // console.log(getSum());
+        // //求1-100之间不能被7整除的整数的和
+        // function getSum1() {
+        //     let sum = 0;
+        //     for (let i = 0; i <= 10;) {
+        //         if (i % 7 === 0) {
+        //             i++;
+        //             continue;
+        //         }
+        //         sum += i;
+        //         i++;
+        //     }
+        //     return sum;
+        // }
+        // console.log(getSum1())
+        // //求200-300之间所有奇数的和
+
+        // function getOddSum() {
+        //     let sum = 0;
+        //     for (let i = 200; i < 300;) {
+        //         if (i % 2 === 0) {
+        //             i++;
+        //             continue;
+        //         }
+        //         sum += i;
+        //         i++;
+        //     }
+        //     return sum;
+        // }
+        // console.log(getOddSum())
+        
+
+        //判断一个数是不是质数
+        function prime(num) {
+            for (let i = 2; i < num; i++) {
+                if(num % i === 0){
+                    return false;
+                }
+            }
+           return true;
+        }
+        // console.log(prime(8)?"是质数":"不是质数");
+        //求1-100之间所有素数的和
+
+        function primeSum(){
+            let sum = 0;
+            for(let i = 2; i <= 100; i++){
+                if(prime(i)){
+                    sum += i;
+                }
+            }
+            return sum;
+        }
+        console.log(primeSum())
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            height: 3000px;
+        }
+        .top1{
+            width: 100%;
+            height: 300px;
+            background: grey;
+        }
+        .bottom1{
+            width: 100%;
+            height: 100px;
+            background: green;
+        }
+        .fixed{
+            position:fixed;
+            width: 100%;
+            /* height: 100px; */
+        }
+        .fixed .top1{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="box" class="header">
+        <div class="top1"></div>
+        <div class="bottom1"></div>
+    </div>
+    <script>
+        // window.onload = function(){
+        //     function fe(){
+        //         const box = document.querySelector('#box');
+        //         var scrollTop = 0;
+                window.onscroll = function(){
+        //             console.dir(document.body)
+        //             // scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+        //             // console.log(scrollTop)
+        //             if(scrollTop>300){
+        //                 box.className = 'fixed';
+        //             }else{
+        //                 box.className = 'header'
+        //             }
+        //         }
+        //     }
+        //     fe()
+        console.log(document.body.scrollTop)
+        console.log(document.documentElement.scrollTop)
+        }
+            
+
+    </script>
+</body>
+</html>

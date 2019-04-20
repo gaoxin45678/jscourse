@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box{
+            width: 200px;
+            height: 200px;
+            border:1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <input type="text" id="tex">
+    <button id="btn">发送</button>
+    <script>
+        //获取元素
+        const box =document.getElementById('box')
+        const tex =document.getElementById('tex')
+        const btn =document.getElementById('btn')
+        //光标自动定位
+        document.getElementById('tex').focus()
+        //给btn绑定点击事件
+        btn.onclick = function(){
+            let cur=tex.value
+            if(cur===''){
+                alert('请输入内容')
+            }
+           
+            // box.innerHTML+='<p>'+cur+'</p>'
+            box.innerHTML+=`<p>${cur}</p>`
+            tex.value=''
+            document.getElementById('tex').focus()
+        }
+        
+    </script>
+</body>
+</html>

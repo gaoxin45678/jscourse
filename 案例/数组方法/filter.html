@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        已选中:<input type="radio" name="r" id="o">
+        未选中:<input type="radio" name="r" id="o2">
+    </div>
+    <ul id="ul">
+        <!-- <li><input type="checkbox" /></li>
+                <li><input type="checkbox" /></li>
+                <li><input type="checkbox" checked/></li> -->
+    </ul>
+    <button id="go">筛选</button>
+    <script>
+        let arr = [true, false, true, false, false, true, true]
+        function fe(arr) {
+            let html = '';
+            for (let i = 0; i < arr.length; i++) {
+                html += `<li><input type="checkbox" ${arr[i] ? 'checked' : ''}></li>`
+            }
+            ul.innerHTML = html;
+        }
+        fe(arr);
+        go.onclick = function () {
+            if (o.checked) {
+                let ary = arr.filter(function (item) {
+                    return item;
+                })
+               fe(ary);
+            }
+            if (o2.checked) {
+                let ary = arr.filter(function (item) {
+                    return !item;
+                })
+                fe(ary);
+            }
+        }
+    </script>
+</body>
+
+</html>

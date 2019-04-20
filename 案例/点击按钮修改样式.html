@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #divTop{
+            line-height: 30px;
+        }
+        #box{
+            width: 100px;
+            height: 100px;
+            border: 5px solid black;
+            margin: 20px 0;
+        }
+        #divBottom{
+            width: 400px;
+            height: 200px;
+            border: 3px solid #ccc;
+            margin: 0 auto;
+            display: none;
+        }
+        #divBottom ul{
+            overflow: hidden;
+        }
+        #divBottom ul li{
+            width: 80px;
+           
+            list-style: none;
+            float: left;
+        }
+        #divBottom ul li button{
+            width: 60px;
+            text-align: center;
+        }
+        #col #red{
+            background: red;
+        }
+        #col #yel{
+            background: yellow;
+        }
+        #col #gre{
+            background: green;
+        }
+    </style>
+</head>
+<body>
+    <div id="divTop">
+        <div>请为下面的方块设置样式</div>
+        <button id="set" >点击设置</button>
+        <div id="box"></div>
+    </div>
+    <div id="divBottom">
+        <ul id="col">
+            <li>颜色:</li>
+            <li><button id="red">红</button></li>
+            <li><button id="yel">黄</button></li>
+            <li><button id="gre">绿</button></li>
+        </ul>
+        <ul id="wit">
+            <li>宽度：</li>
+            <li><button id="wid1">200px</button></li>
+            <li><button id="wid2">300px</button></li>
+            <li><button id="wid3">400px</button></li>
+        </ul>
+        <ul id="hei">
+            <li>高度：</li>
+            <li><button id="hei1">200px</button></li>
+            <li><button id="hei2">300px</button></li>
+            <li><button id="hei3">400px</button></li>
+        </ul>
+        <ul id="selec">
+            <li><button id="confirm">确定</button></li>
+            <li><button id="cancel">取消</button></li>
+        </ul>
+    </div>
+    <script>
+        //获取元素
+        const set = document.getElementById('set');
+        const confirm = document.getElementById('confirm')
+        const cancel = document.getElementById('cancel')
+        const red = document.getElementById('red')
+        const yel = document.getElementById('yel')
+        const gre = document.getElementById('gre')
+        const box = document.getElementById('box')
+
+        //点击设置按钮的时候divBottom显示
+        set.onclick = function(){
+            divBottom.style.display = 'block';
+            }
+       
+        //点击红色的时候
+        red.onclick = function(){
+            box.style.background = 'red'
+        }
+        //点击黄色的时候
+        yel.onclick = function(){
+            box.style.background = 'yellow'
+        }
+        //点击绿色的时候
+        gre.onclick = function(){
+            box.style.background = 'green'
+        }
+         //点击确定的时候
+         confirm.onclick = function(){
+            divBottom.style.display = 'none';
+        }
+        //点击取消的时候
+        cancel.onclick = function(){
+            confirm.onclick();
+            box.style.cssText='';
+        }
+        //点击宽度和高度的时候
+        let setSize = function(obj,atr){
+            obj.onclick = function(){
+                box.style[atr] =obj.innerHTML
+            }
+        }
+        setSize(wid1,'width')
+        setSize(wid2,'width')
+        setSize(wid3,'width')
+        setSize(hei1,'height')
+        setSize(hei2,'height')
+        setSize(hei3,'height')
+    </script>
+</body>
+</html>
