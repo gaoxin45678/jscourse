@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title></title>
+    <style>
+        body {
+            background: #f1f1f1;
+            font-family: "微软雅黑";
+        }
+
+        ul {
+            margin: 5px 0 0 0;
+            padding: 0;
+            list-style: none;
+            width: 300px;
+            background: #f1f1f1;
+        }
+
+        li {
+            border-left: 1px solid #fff;
+            border-bottom: 1px solid #999;
+            border-top: 1px solid #fff;
+            border-right: 1px solid #ccc;
+            line-height: 28px;
+            text-indent: 20px;
+            font-family: arial;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-bottom: 3px;
+            color: #6f6f7a;
+            transition: 0.3s;
+        }
+
+        li:hover {
+            border-right: 1px solid #fff;
+            border-top: 1px solid #999;
+            border-bottom: 1px solid #fff;
+            border-left: 1px solid #999;
+            background: #6e697a;
+            color: #fff;
+        }
+
+        img {
+            width: 400px;
+            position: absolute;
+            top: 33px;
+            left: 309px;
+            display: none;
+            border-radius: 8px;
+        }
+
+        .show {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <input id="btn1" type="button" value="添加" />
+    <input id="btn2" type="button" value="减少" />
+    不需要使用DOM创建、删除方法，不需要使用索引值，完成练习。
+    <ul id="ul1">
+
+    </ul>
+    <img id="img1" src="img/mm1.jpg" />
+
+    <script type="text/javascript">
+
+        let arr = ['img/mm1.jpg', 'img/timg.jpg', 'img/zs1.jpg', 'img/zs2.jpg', 'img/zs3.jpg', 'img/zs4.jpg']
+        const btn1 = document.querySelector('#btn1');
+        const btn2 = document.querySelector('#btn2');
+        const ul1 = document.querySelector('#ul1');
+        const img = document.querySelector('#img1');
+        let len = arr.length;
+
+        let ary = [];//定义一个空数组用来储存生成的li
+        let num = 0; //num 是页面中li的个数
+        let cur = len + 1; //cur 是点击时该li的索引
+        btn1.onclick = function () {
+            if (num < len) {
+                ary.push(`<li>这是第${num + 1}张</li>`);
+                num++;
+            } else {
+                num = len;
+            }
+            ul1.innerHTML = ary.join('');
+            img.className = 'show';
+            img.src = arr[num - 1];
+            on();
+        }
+        btn2.onclick = function () {
+            ary.pop();
+            if (num > 1) {
+                num--;
+                img.src = arr[num - 1];
+            } else if (num === 1) {
+                num--;
+                img.src = '';
+            }
+            if (cur < num) {
+                img.src = arr[cur]
+            }
+            ul1.innerHTML = ary.join('');
+            on();
+        }
+        function on() {
+            const lis = document.getElementsByTagName('li');
+            for (let i = 0; i < lis.length; i++) {
+                lis[i].onclick = function () {
+                    img.src = arr[i]
+                    cur = i;
+                }
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

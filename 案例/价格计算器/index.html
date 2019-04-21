@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style>
+		body,
+		ul,
+		li {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+	</style>
+	<link rel="stylesheet" type="text/css" href="price.css" />
+</head>
+
+<body onselectstart="return false;">
+	<div class="wrap">
+		<div class="box">
+			<ul class="list">
+				<li>
+					<i class="reduce"></i>
+					<em>0</em>
+					<i class="add"></i>
+					<span>
+						单价：<strong>12.5元 </strong> 小计：<strong>0元</strong>
+					</span>
+				</li>
+				<li>
+					<i class="reduce"></i>
+					<em>0</em>
+					<i class="add"></i>
+					<span>
+						单价：<strong>10.5元 </strong> 小计：<strong>0元</strong>
+					</span>
+				</li>
+				<li>
+					<i class="reduce"></i>
+					<em>0</em>
+					<i class="add"></i>
+					<span>
+						单价：<strong>8.5元 </strong> 小计：<strong>0元</strong>
+					</span>
+				</li>
+				<li>
+					<i class="reduce"></i>
+					<em>0</em>
+					<i class="add"></i>
+					<span>
+						单价：<strong>8元 </strong> 小计：<strong>0元</strong>
+					</span>
+				</li>
+				<li>
+					<i class="reduce"></i>
+					<em>0</em>
+					<i class="add"></i>
+					<span>
+						单价：<strong>14.5元 </strong> 小计：<strong>0元</strong>
+					</span>
+				</li>
+			</ul>
+			<div class="info">
+				<span>商品公合计：<em>0</em>件</span>
+				<span>共花费了：<em>0</em>元</span>
+				<br />
+				<br />
+				<span>其中最贵的商品单价是：<em>0</em>元</span>
+			</div>
+		</div>
+	</div>
+	<script>
+		window.onload = function () {
+			//获取总计部分
+			const info = document.querySelector('.info');
+			const totalSpans = document.querySelectorAll('.info em');
+			const totalNumber = totalSpans[0];  //商品总数量
+			const totalMoney = totalSpans[1]; // 商品总金额
+			const topMoney = totalSpans[2];  // 商品中最贵的
+
+			//获取ul部分
+			const list = document.querySelector('.list');  //获取ul
+			const lis = list.querySelectorAll('li'); // 获取所有的li
+			const reduce = list.querySelectorAll('.list>li>i:first-child');//减少按钮
+			const add = list.querySelectorAll('.list>li>i:nth-child(3)');//增加按钮
+			const number = list.querySelectorAll('.list em');//每一个的数量
+			const price = list.querySelectorAll('.list>li>span>strong:first-child');//每一个的单价
+			const subTotal = list.querySelectorAll('.list>li>span>strong:last-child');//金额小计
+
+			//循环绑定点击事件。个数和小计部分相应的运算
+			let len = lis.length;
+			for (let i = 0; i < len; i++) {
+				let num = 0;
+				add[i].onclick = function () {
+					num++;
+					number[i].innerHTML = num;
+					subTotal[i].innerHTML = parseFloat(price[i].innerHTML) * num + '元';
+					total();
+				}
+				reduce[i].onclick = function () {
+					if (num > 0) {
+						num--;
+						number[i].innerHTML = num;
+						subTotal[i].innerHTML = parseFloat(price[i].innerHTML) * num + '元';
+					}
+					total();
+				}
+			}
+			//当点击增加或者减少时总计部分相应的运算
+			function total() {
+				let cont = 0;
+				let contMoney = 0;
+				let max = 0;
+				for (let j = 0; j < len; j++) {
+					cont += parseFloat(number[j].innerHTML);
+					contMoney += parseFloat(subTotal[j].innerHTML);
+					if (parseFloat(number[j].innerHTML) && parseFloat(price[j].innerHTML) > max) {
+						max = parseFloat(price[j].innerHTML);
+					}
+				}
+				totalNumber.innerHTML = cont;
+				totalMoney.innerHTML = contMoney;
+				topMoney.innerHTML = max;
+			}
+		}
+	</script>
+</body>
+
+</html>
