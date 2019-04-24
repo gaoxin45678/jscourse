@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #box,
+        #box2 {
+            width: 200px;
+            height: 50px;
+            border: 1px solid #000;
+        }
+
+        #box div,
+        #box2 div {
+            display: none;
+        }
+
+        #box div.show,
+        #box2 div.show {
+            display: block;
+        }
+
+        .active {
+            background: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="warp">
+        <button class="active">按钮1</button>
+        <button>按钮2</button>
+        <button>按钮3</button>
+        <section id="box">
+            <div class="show">头条</div>
+            <div>体育</div>
+            <div>新闻</div>
+        </section>
+    </div>
+    <div id="warp2">
+        <button class="active">按钮1</button>
+        <button>按钮2</button>
+        <button>按钮3</button>
+        <section id="box2">
+            <div class="show">头条</div>
+            <div>体育</div>
+            <div>新闻</div>
+        </section>
+    </div>
+    <button id="btn1">自动播放</button>
+    <button id="btn2">停止</button>
+    <button id="btn3">反向播放</button>
+    <button id="btn4">动静切换</button>
+    <script>
+        //创建选项卡的类
+        function Tab(id) {
+            this.warp = document.getElementById(id);
+            this.btns = this.warp.querySelectorAll('button');
+            this.divs = this.warp.querySelectorAll('div');
+            this.timer = null;
+            this.num = 0;
+        }
+        //给小按钮绑定事件，通过传参决定绑定的事件名称
+        Tab.prototype.events = function (evenName) {
+            let that = this;
+            evenName = evenName || 'onclick';
+            for (let i = 0; i < this.btns.length; i++) {
+                this.btns[i][evenName] = function () {
+                    that.change(this);
+                }
+            }
+        }
+        //设置触发事件后的改变
+        Tab.prototype.change = function (n) {
+            for (let i = 0; i < this.btns.length; i++) {
+                this.btns[i].className = '';
+                this.divs[i].className = '';
+                this.btns[i].ind = i;
+            }
+            n.className = 'active';
+            this.divs[n.ind].className = 'show';
+        }
+        //自动正序播放，在触发定时器前先清空之前的，防止发生重叠错乱
+        Tab.prototype.time = function () {
+            this.stop();
+            this.timer = setInterval(() => {
+                this.num++;
+                this.num %= this.btns.length;
+                this.change(this.btns[this.num]);
+            }, 1000);
+        }
+        //清除定时器
+        Tab.prototype.stop = function () {
+            clearInterval(this.timer);
+            this.timer = null;//清除定时器只会让定时器停止运行，并不会让timer变成0
+        }
+        //倒序播放，执行前先清空
+        Tab.prototype.reverse = function () {
+            this.stop();
+            this.timer = setInterval(() => {
+                this.num--;
+                if (this.num < 0) {
+                    this.num = this.btns.length - 1;
+                }
+                this.change(this.btns[this.num]);
+            }, 1000);
+        }
+        //判断是否在播放，将此时timer的值return出去供外面作为判断使用
+        Tab.prototype.isAutoPlay = function () {
+            return this.timer;
+        }
+        let t1 = new Tab('warp');
+        let t2 = new Tab('warp2');
+        t1.events();
+        t2.events();
+        t1.time();
+        //点击自动播放
+        btn1.onclick = function () {
+            t2.time();
+            t1.time();
+        }
+        //点击停止
+        btn2.onclick = function () {
+            t2.stop();
+            t1.stop();
+        }
+        //点击倒序播放
+        btn3.onclick = function () {
+            t2.reverse();
+        }
+        //动静切换，判断一下当前的状态，然后进行切换
+        btn4.onclick = function () {
+            if (t1.isAutoPlay()) {
+                t1.stop();
+            } else {
+                t1.time();
+            }
+            if (t2.isAutoPlay()) {
+                t2.stop();
+            } else {
+                t2.time();
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>
