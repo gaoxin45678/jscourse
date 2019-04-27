@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box1,
+        #box2 {
+            margin: 0 auto;
+            width: 300px;
+            min-height: 200px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #list1 {
+            padding-left: 95px;
+        }
+
+        #list1 li {
+            list-style: none;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        #remove {
+            margin-left: 33px;
+        }
+
+        #content {
+            width: 241px;
+            height: 70px;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+            margin-left: 28px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box1">
+        <h2>内部词库</h2>
+        <input type="text" id="txt1">
+        <button id="btn1">添加</button>
+        <br />
+        <input type="checkbox" name="" id="allSelected">全选
+        <button id="remove">删除</button>
+        <ul id="list1">
+            <li>
+            </li>
+        </ul>
+    </div>
+    <div id="box2">
+        <h2>用户输入</h2>
+        <input type="text" id="txt2">
+        <button id="btn2">请输入内容</button>
+        <div id="content"></div>
+    </div>
+    <script>
+        list1 = document.querySelector('#list1')
+        let arr = ['艹', '卧槽', '我擦', '渣渣', '尼玛'];
+        //刷新页面
+        let rander = function () {
+            let html = '';
+            arr.forEach((item) => {
+                html += '<li><input type = "checkbox">' + item + '</li>'
+            })
+            list1.innerHTML = html;
+        }
+        rander();
+        //点击添加
+        btn1.onclick = function () {
+            let t1 = txt1.value;
+            if (t1) {
+                if (!arr.some((item) => item === t1)) {
+                    arr.push(t1);
+                    rander();
+                } else {
+                    alert('它已深深的存在我们脑海里')
+                }
+            }
+            txt1.value = '';
+        }
+        //用户输入
+        btn2.onclick = function () {
+            //创建一个正则
+            let t2 = txt2.value;
+            let fe = new RegExp(arr.join('|'), 'g')
+            let str = '@#$%*&^!~';
+            let s = t2.replace(fe, ($0) => {
+                let temp = '';
+                for (let i = 0; i < $0.length; i++) {
+                    temp += str[Math.round(Math.random() * $0.length)]
+                }
+                return temp
+
+            });
+            content.innerHTML= s;
+            txt2.value = '';
+        }
+        //点击全选
+        let onOff = true;
+        allSelected.onclick = function () {
+            let ins = list1.querySelectorAll('input');
+            ins = Array.from(ins);
+            if (onOff) {
+                ins.forEach((item) => item.checked = true)
+            } else {
+                ins.forEach((item) => item.checked = false)
+            }
+            onOff = !onOff;
+        }
+        //点击删除
+        remove.onclick = function () {
+            let ins = list1.querySelectorAll('input');
+            arr = arr.filter((item, index) => {
+                if (!ins[index].checked) {
+                    return item;
+                }
+            })
+            rander()
+        }
+    </script>
+</body>
+
+</html>
