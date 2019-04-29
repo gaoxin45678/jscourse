@@ -1,41 +1,53 @@
-function Fn(id) {
-    this.oDiv = document.getElementById(id);
-    this.imgs = this.oDiv.querySelectorAll('img');
-    this.spans = this.oDiv.querySelector('span');
-    this.ps = this.oDiv.querySelector('p');
-    this.down = this.oDiv.querySelector('.down');
-    this.back = this.oDiv.querySelector('.back');
-}
-
-Fn.prototype.events = function () {
-    let num = 0;
-    let that = this;
-    this.down.onclick = function () {
-        that.imgs[num].style.display = 'none';
-        num < that.imgs.length - 1 ? num++ : num = 0;
-        that.imgs[num].style.display = 'block';
-        that.ps.innerHTML = `这是第${num + 1}张`;
-        that.spans.innerHTML = `${num + 1}/${that.imgs.length}`;
-        console.log(num);
+class Cad {
+    constructor(id) {
+        this.oDiv = document.getElementById(id);
+        this.imgs = this.oDiv.querySelectorAll('img');
+        this.spans = this.oDiv.querySelector('span');
+        this.ps = this.oDiv.querySelector('p');
+        this.down = this.oDiv.querySelector('.down');
+        this.back = this.oDiv.querySelector('.back');
+        this.num = 0;
     }
-    this.back.onclick = function () {
-        that.imgs[num].style.display = 'none';
-        num > 0 ? num-- : num = that.imgs.length - 1;
-        that.imgs[num].style.display = 'block';
-        that.ps.innerHTML = `这是第${num + 1}张`;
-        that.spans.innerHTML = `${num + 1}/${that.imgs.length}`;
+    f1() {
+        this.imgs[this.num].style.display = 'none';
+        this.num < this.imgs.length - 1 ? this.num++ : this.num = 0;
+        this.imgs[this.num].style.display = 'block';
+        this.ps.innerHTML = `这是第${this.num + 1}张`;
+        this.spans.innerHTML = `${this.num + 1}/${this.imgs.length}`;
+    }
+    f2() {
+        this.imgs[this.num].style.display = 'none';
+        this.num > 0 ? this.num-- :this.num = this.imgs.length - 1;
+        this.imgs[this.num].style.display = 'block';
+        this.ps.innerHTML = `这是第${this.num + 1}张`;
+        this.spans.innerHTML = `${this.num + 1}/${this.imgs.length}`;
+    }  
+}
 
+let g = new Cad('oDiv1');
+let h = new Cad('oDiv2');
+before1.onclick = function(){
+    g.f2();
+}
+before2.onclick = function(){
+    h.f2();
+}
+after1.onclick = function(){
+    g.f1();
+}
+after2.onclick = function(){
+    h.f1();
+}
+function events(before,after){
+    before.onclick = function(){
+        g.f2();
+        h.f2();
+    }
+    after.onclick = function(){
+        g.f1();
+        h.f1();
     }
 }
-let g = new Fn('oDiv1');
-g.events();;
-let h = new Fn('oDiv2');
-h.events();
+events(pre,next)
 
-pre.onclick = function () {
 
-}
-next.onclick = function () {
-
-}
-console.log(g.down)

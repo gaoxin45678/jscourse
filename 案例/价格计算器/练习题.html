@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //
+        // console.log(a);//undefined
+        // var a = 12;
+        // function fn() {
+        //     console.log(a);//uhdefined
+        //     var a = 13;
+        // }
+        // fn();
+        // console.log(a);//12
+
+        /*
+         A、undefined  12 13             
+         B、undefined undefined 12   
+         C、undefined undefined 13         
+         D、有程序报错
+        */
+
+
+        // console.log(a);//undefined
+        // var a = 12;
+        // function fn() {
+        //     console.log(a); //12
+        //     a = 13;
+        // }
+        // fn();
+        // console.log(a); //13
+
+        // /*
+        //  A、undefined  12 13             
+        //  B、undefined undefined 12   
+        //  C、undefined undefined 13         
+        //  D、有程序报错
+        // */
+
+
+        // console.log(a);
+        // a = 12;
+        // function fn() {
+        //     console.log(a); //12
+        // }
+        // fn();
+        // console.log(a);
+
+        // /*
+        //  A、undefined  12 13             
+        //  B、undefined undefined 12   
+        //  C、undefined undefined 13         
+        //  D、有程序报错
+        // */
+
+        // var foo = 1;
+        // function bar() {
+        //     if (!foo) {
+        //         var foo = 10;
+        //     }
+        //     console.log(foo);//10
+        // }
+        // bar();
+
+        // /*
+        //  A、1     
+        //  B、10     
+        //  C、undefined    
+        //  D、报错
+        // */
+
+        // var n = 0;
+        // function a() {
+        //     var n = 10;//11
+        //     function b() {
+        //         n++;
+        //         console.log(n);//11
+        //     }
+        //     b();
+        //     return b;
+        // }
+        // var c = a();
+        // c();//12
+        // console.log(n);//0
+
+
+        // /*
+        //  A、1 1 1   
+        //  B、11 11 0  
+        //  C、11 12 0  
+        //  D、11 12 12
+        // */
+
+
+        // var a = 10, b = 11, c = 12;
+        // function test(a) {
+        //     a = 1;//这里改的是形参
+        //     var b = 2;
+        //     c = 3;
+        // }
+        // test(10);
+        // console.log(a);//10
+        // console.log(b);//11
+        // console.log(c);//3
+
+        // /*
+        //  A、1 11 3   
+        //  B、10 11 12  
+        //  C、1 2 3   
+        //  D、10 11 3
+        // */
+
+
+        // if (!("a" in window)) {
+        //     var a = 1;
+        // }
+        // console.log(a);//undefined
+
+        // /*
+        //  A、1   
+        //  B、undefined   
+        //  C、报错   
+        //  D、以上答案都不对
+        // */
+        // var a = 4;
+        // function b(x, y, a) {
+        //     console.log(a);//3
+        //     arguments[2] = 10;
+        //     console.log(a);//10
+        // }
+        // a = b(1, 2, 3);
+        // console.log(a);//undefined
+
+        // /*
+        //  A、3  3  4   
+        // B、3  10  4   
+        // C、3  10  10   
+        // D、3  10  undefined
+
+
+
+        // var foo='hello'; 
+        // (function(foo){
+        //    console.log(foo);//hello
+        //    var foo=foo||'world';//hello
+        //    console.log(foo);//hello
+        // })(foo);
+        // console.log(foo);//hello
+
+        // /*
+        //  A、hello hello hello   
+        //  B、undefined world  hello   
+        //  C、hello world world   
+        //  D、以上答案都不正确
+        // */
+
+        // var a = 9;
+        // function fn() {
+        //     a = 0;//1 2
+        //     return function (b) {//5
+        //         return b + a++;//5+0
+        //     }
+        // }
+        // var f = fn();
+        // console.log(f(5));//5
+        // console.log(fn()(5));//5
+        // console.log(f(5));//6
+        // console.log(a);//2
+
+        // /*
+        //  A、6 6 7 2   
+        //  B、5 6 7 3   
+        //  C、5 5 6 3   
+        //  D、以上答案都不正确 
+        // */
+        // // 二、问答题（需要画图）
+
+
+        // var ary = [1, 2, 3, 4];
+        // function fn(ary) {
+        //     ary[0] = 0;
+        //     ary = [0];
+        //     ary[0] = 100;
+        //     return ary;
+        // }
+        // var res = fn(ary);
+        // console.log(ary);//[0,2,3,4]
+        // console.log(res);//[100]
+
+
+        // function fn(i) {
+        //     return function (n) {
+        //         console.log(n + (i++));
+        //     }
+        // }
+        // var f = fn(10);
+        // f(20);
+        // fn(20)(40);
+        // fn(30)(50);
+        // f(30);
+
+
+        // var i = 10;
+        // function fn() {
+        //     return function (n) {
+        //         console.log(n + (++i));
+        //     }
+        // }
+        // var f = fn();
+        // f(20);
+        // fn()(20);
+        // fn()(30);
+        // f(30);
+        // // 4、
+
+        // var num = 10;
+        // var obj = { num: 20 };
+        // obj.fn = (function (num) {
+        //     this.num = num * 3;
+        //     num++;
+        //     return function (n) {
+        //         this.num += n;
+        //         num++;
+        //         console.log(num);
+        //     }
+        // })(obj.num);
+        // var fn = obj.fn;
+        // fn(5);
+        // obj.fn(10);
+        // console.log(num, obj.num);
+        // // 5、
+
+        // function Fn() {
+        //     this.x = 100;
+        //     this.y = 200;
+        //     this.getX = function () {
+        //         console.log(this.x);
+        //     }
+        // }
+        // Fn.prototype.getX = function () {
+        //     // console.log(this)
+        //     console.log(this.x);
+        // };
+        // Fn.prototype.getY = function () {
+        //     console.log(this.y);
+        // };
+        // var f1 = new Fn;
+        // var f2 = new Fn;
+        // console.log(f1.getX === f2.getX);//false
+        // console.log(f1.getY === f2.getY);//true
+        // console.log(f1.__proto__.getY === Fn.prototype.getY);//true
+        // console.log(f1.__proto__.getX === f2.getX);//false
+        // console.log(f1.getX === Fn.prototype.getX);//false
+        // console.log(f1.constructor);//fn
+        // console.log(Fn.prototype.__proto__.constructor);//object
+        // f1.getX();//100
+        // f1.__proto__.getX();//undefined
+        // f2.getY();//200
+        // Fn.prototype.getY();//undefined
+
+        // // 2、用友面试题
+
+        // var fullName = 'language';
+        // var obj = {
+        //     fullName :'javascript',
+        //     prop: {
+        //         getFullName: function () {
+        //             return this.fullName;
+        //         }
+        //     }
+        // };
+        // console.log(obj.prop.getFullName());//undefined
+        // var test = obj.prop.getFullName;
+        // console.log(test());//language
+
+        // var name = 'window';
+        // var Tom = {
+        //     name: "Tom",
+        //     show: function () {
+        //         console.log(this.name);
+        //     },
+        //     wait: function () {
+        //         var fun = this.show;
+        //         fun();
+        //     }
+        // };
+        // Tom.wait();//window
+        // // 3、阿里超经典面试题（有难度）
+        // 不会
+        function Foo() {
+            getName = function () {
+                console.log(1);
+            };
+            return this;
+        }
+        Foo.getName = function () {
+            console.log(2);
+        };
+        Foo.prototype.getName = function () {
+            console.log(3);
+        };
+        var getName = function () {
+            console.log(4);
+        };
+        // function getName() {
+        //     console.log(5);
+        // }
+
+        Foo.getName();//2
+        getName();//4
+        Foo().getName();//1
+        getName();//1
+        new Foo.getName();//2
+        new Foo().getName();//3
+        new new Foo().getName();//
+        // // 4、腾讯面试题
+        // function fun() {
+        //     this.a = 0;
+        //     this.b = function () {
+        //         alert(this.a);
+        //     }
+        // }
+        // fun.prototype = {
+        //     b: function () {
+        //         this.a = 20;
+        //         alert(this.a);
+        //     },
+        //     c: function () {
+        //         this.a = 30;
+        //         alert(this.a)
+        //     }
+        // }
+        // var my_fun = new fun();
+        // my_fun.b();//0
+        // my_fun.c();//30
+                //第一题
+                // var num = 1;//4 14
+    // var obj = {num: 2}; //22
+    // obj.fn = (function(num){ //2 3 4 5
+    // this.num = num*2;
+    // num++;
+    // return function(n){ //10 20
+    // this.num +=n;
+    // num++;
+    // console.log(num);
+    // }
+    // })(obj.num);
+    // var fn = obj.fn;
+    // fn(10);//4
+    // obj.fn(20); //5
+    // console.log(num,obj.num); //14 22
+    //第二题
+    // console.log(num);//undefined
+    // if(!('num' in window)){
+    // var num = 100;
+    // }
+    // console.log(num);//undefined
+    //第三题
+    // var name = '中国';
+    // var age = 5000;
+    // name = (function(name,age){//'中国'
+    // arguments[0] = '珠峰';//name '珠峰'
+    // age = age || this.age;// 5000
+    // console.log(name,age);//珠峰 5000
+    // })(name); //name 等于这个函数的返回值，二这个函数没有返回值，所以等于undefined
+    // console.log(name,age);//undefined，5000
+    //第四题
+    // var ary = [100,100];//[100]
+    // ~function(ary){//[100,100]
+    // ary.length --;
+    // ary = [];
+    // ary[ary.length] = 300;
+    // alert(ary);//[300]
+    // }(ary);
+    // alert(ary)//[100]
+    //第五题
+    // function fn(i){//2 3 5
+    // return function(n){//3 3 6
+    // console.log(n*(++i));
+    // }
+    // }
+    // var f = fn(2);
+    // f(3);//9
+    // f(4);//16
+    // fn(5)(6);//36
+    // fn(7)(8);//64
+    //第六题
+    // var num = 1;//4 14
+    // var obj = {
+    // num: 2 // 22
+    // };
+    // obj.fn = (function (num) {//2 3 4 5
+    // this.num = num * 2;
+    // num++;
+    // return function (n) { //10 20
+    // this.num += n;
+    // num++;
+    // console.log(num);
+    // }
+    // })(obj.num);
+    // var fn = obj.fn;
+    // fn(10); //4
+    // obj.fn(20); //5
+    // console.log(num, obj.num);//14 22
+    //第七题
+    // function Fn(num){//10
+    // this.x = this.y = num; //10
+    // }
+    // Fn.prototype = {
+    // x:20,
+    // sum:function(){
+    // console.log(this.x+this.y);
+    // }
+    // };
+    // // Fn.prototype.n = 12;
+    // var f = new Fn(10);
+    // // console.log(f.sum ===Fn.prototype.sum); //true
+    // // f.sum();//20
+    // // Fn.prototype.sum(); //NaN
+    // console.log(f.constructor);//Object
+    // //在给构造函数的原型重新赋址的时候会改变实例的构造函数指向
+    // //如果只是赋值不是改变他的构造函数的指向
+    // //第二题
+    // var obj = {
+    // name : '珠峰',//z中国
+    // age : 7
+    // }
+    // ~function(obj){
+    // obj.name = '中国';
+    // obj = {};
+    // obj.age = 5000;
+    // console.log(obj); //{age : 5000}
+    // }(obj);
+    // console.log(obj)//{name :中国，age：7}
+    //第4题
+    // var i = 2;
+    // function fn(){
+    // i = 2;//3
+    // return function(n){//3
+    // console.log(n*(++i));//
+    // }
+    // }
+    // var f = fn();
+    // f(3);//9
+    // fn()(3);//9
+    // f(4);//16
+    // fn()(4);//12
+    //
+    // var name = '中国';
+    // var age = 5000;
+    // age = (function (name , age){
+
+    // name = '珠峰';
+    // arguments[1] = 7;
+    // this.name = arguments[0];
+    // console.log(name,age);//珠峰 7
+    // })(name,age);
+
+    // console.log(name,age);//珠峰 undefined
+    // var fullName = 'language';
+    // var obj = {
+    // fullName:'javascript',
+    // prop: {
+    // getFullName: function () {
+    // return this.fullName;
+    // }
+    // }
+    // };
+    // console.log(obj.prop.getFullName());
+    // var test = obj.prop.getFullName;
+    // console.log(test());
+
+    </script>
+</body>
+
+</html>

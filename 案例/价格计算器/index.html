@@ -70,58 +70,58 @@
 			</div>
 		</div>
 	</div>
-	<script>
-		window, onload = function () {
-			const list = document.querySelector('.list');
-			const lis = list.querySelectorAll('li');//获取所有的li元素
-			const reduce = list.querySelectorAll('li>i:first-child');//获取减少按钮
-			const add = list.querySelectorAll('li>i:nth-child(3)');//获取增加按钮
-			const number = list.querySelectorAll('li>em');//个数
-			const price = list.querySelectorAll('li>span>strong:first-child');//单价
-			const subTotal = list.querySelectorAll('li>span>strong:last-child');//小计
+	<script src="index.js">
+		// window, onload = function () {
+		// 	const list = document.querySelector('.list');
+		// 	const lis = list.querySelectorAll('li');//获取所有的li元素
+		// 	const reduce = list.querySelectorAll('li>i:first-child');//获取减少按钮
+		// 	const add = list.querySelectorAll('li>i:nth-child(3)');//获取增加按钮
+		// 	const number = list.querySelectorAll('li>em');//个数
+		// 	const price = list.querySelectorAll('li>span>strong:first-child');//单价
+		// 	const subTotal = list.querySelectorAll('li>span>strong:last-child');//小计
 
-			const info = document.querySelector('.info');
-			const sumNumber = info.querySelectorAll('em')[0]; //总数量
-			const totalMoney = info.querySelectorAll('em')[1];//总价钱
-			const maxMoney = info.querySelectorAll('em')[2];//最贵的
-			//循环绑定点击事件
-			let len = lis.length;
-			for (let i = 0; i < len; i++) {
-				let num = 0;
-				add[i].onclick = function () {
-					num++;
-					number[i].innerHTML = num;
-					subTotal[i].innerHTML = num * parseFloat(price[i].innerHTML) + '元';
-					total();
-				}
-				reduce[i].onclick = function () {
-					if (num > 0) {
-						num--;
-						number[i].innerHTML = num;
-						subTotal[i].innerHTML = num * parseFloat(price[i].innerHTML) + '元';
-						total();
-					}
-				}
-			}
-			//当点击时总价的变化
-			function total(){
-				let cont  = 0;//接收总个数
-				let sum = 0; //接收总价钱
-				let maxM = 0;//单价最高的
-				for(let i = 0; i < len; i++){
-					cont += parseFloat(number[i].innerHTML);//总个数
-					sum += parseFloat(subTotal[i].innerHTML);//总价钱
-					price1 = parseFloat(price[i].innerHTML) // 每一个的单价
-					num1 = parseFloat(number[i].innerHTML) //页面中商品的个数
-					if(num1 > 0 && price1 > maxM){
-						maxM = price1;
-					}
-				}
-				sumNumber.innerHTML = cont; //总数量
-				totalMoney.innerHTML = sum;//总价钱
-				maxMoney.innerHTML = maxM;// 最贵的
-			}
-		}
+		// 	const info = document.querySelector('.info');
+		// 	const sumNumber = info.querySelectorAll('em')[0]; //总数量
+		// 	const totalMoney = info.querySelectorAll('em')[1];//总价钱
+		// 	const maxMoney = info.querySelectorAll('em')[2];//最贵的
+		// 	//循环绑定点击事件
+		// 	let len = lis.length;
+		// 	for (let i = 0; i < len; i++) {
+		// 		let num = 0;
+		// 		add[i].onclick = function () {
+		// 			// num++;
+		// 			number[i].innerHTML = ++num;
+		// 			subTotal[i].innerHTML = num * parseFloat(price[i].innerHTML) + '元';
+		// 			total();
+		// 		}
+		// 		reduce[i].onclick = function () {
+		// 			if (num > 0) {
+		// 				// num--;
+		// 				number[i].innerHTML = --num;
+		// 				subTotal[i].innerHTML = num * parseFloat(price[i].innerHTML) + '元';
+		// 				total();
+		// 			}
+		// 		}
+		// 	}
+		// 	//当点击时总价的变化
+		// 	function total(){
+		// 		let cont  = 0;//接收总个数
+		// 		let sum = 0; //接收总价钱
+		// 		let maxM = 0;//单价最高的
+		// 		for(let i = 0; i < len; i++){
+		// 			cont += parseFloat(number[i].innerHTML);//总个数
+		// 			sum += parseFloat(subTotal[i].innerHTML);//总价钱
+		// 			price1 = parseFloat(price[i].innerHTML) // 每一个的单价
+		// 			num1 = parseFloat(number[i].innerHTML) //页面中商品的个数
+		// 			if(num1 > 0 && price1 > maxM){
+		// 				maxM = price1;
+		// 			}
+		// 		}
+		// 		sumNumber.innerHTML = cont; //总数量
+		// 		totalMoney.innerHTML = sum;//总价钱
+		// 		maxMoney.innerHTML = maxM;// 最贵的
+		// 	}
+		// }
 	</script>
 </body>
 
