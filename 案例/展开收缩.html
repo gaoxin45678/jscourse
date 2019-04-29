@@ -26,8 +26,10 @@
         let onOff = true;
         sh.onclick = function(){
             if(onOff){
+                con.innerText = sty.substr(0,50)
                 this.innerText = '展开'
             }else{
+                con.innerText = sty
                 this.innerText = '收缩'
             }
             onOff = !onOff

@@ -220,10 +220,10 @@
 			//如果是默认图片输出以下内容
 			if (onOff) {
 				//嵌套两个标签拼接
-				messageBody.innerHTML += '<div class="left"><img src="img/lico.png"/><span>' + text.value + '<section>'+'12:00'+ '</section></span></div>'
+				messageBody.innerHTML += '<div class="left"><img src="img/lico.png"/><span>' + text.value + '<section>12:00</section></span></div>'
 
 			} else {
-				messageBody.innerHTML += '<div class="right"><img src="img/rico.png"/><span>' + text.value + '<section>' + new Date(Date.now())+':'+new Date().getMinutes() + '</section></span></div>'
+				messageBody.innerHTML += '<div class="right"><img src="img/rico.png"/><span>' + text.value + '<section>12:01</section></span></div>'
 			}
 			text.value = ''
 		}

@@ -22,28 +22,28 @@ class Goods {
             this.reduce[i].index = i
             this.add[i].onclick = function () {
                 num++
-                that.increase(this.index, num);
-                that.amount(len);
+                that.increase(this.index, num);//调用增加
+                that.amount(len);//调用合计
             }
             this.reduce[i].onclick = function () {
                 if (num > 0) {
                     num--;
-                    that.lessen(this.index, num);
-                    that.amount(len);
+                    that.lessen(this.index, num);//调用减少
+                    that.amount(len);//调用合计
 
                 }
             }
         }
     }
-    increase(i, num) {
+    increase(i, num) {//增加的方法
         this.number[i].innerHTML = num;
         this.subTotal[i].innerHTML = num * parseFloat(this.price[i].innerHTML) + '元';
     }
-    lessen(i, num) {
+    lessen(i, num) {//减少
         this.number[i].innerHTML = num;
         this.subTotal[i].innerHTML = num * parseFloat(this.price[i].innerHTML) + '元';
     }
-    amount(len) {
+    amount(len) {//合计及最大值
         let cont = 0;//接收总个数
         let sum = 0; //接收总价钱
         let maxM = 0;//单价最高的
