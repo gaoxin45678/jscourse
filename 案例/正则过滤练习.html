@@ -99,10 +99,9 @@
             let s = t2.replace(fe, ($0) => {
                 let temp = '';
                 for (let i = 0; i < $0.length; i++) {
-                    temp += str[Math.round(Math.random() * $0.length)]
+                    temp += str[Math.round(Math.random() * $0.length)];
                 }
-                return temp
-
+                return temp;
             });
             content.innerHTML= s;
             txt2.value = '';
