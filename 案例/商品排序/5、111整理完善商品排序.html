@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/reset.min.css">
+    <link rel="stylesheet" href="css/index.css">
+    <style>
+        #list img {
+            opacity: 0;
+            transition: 1s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div class="header">
+            <span>排序</span>
+            <a href="javascript:;" kk="time">上架时间
+                <i class="up"></i>
+                <i class="down"></i>
+            </a>
+            <a href="javascript:;" kk="hot">热度
+                <i class="up"></i>
+                <i class="down"></i>
+            </a>
+            <a href="javascript:;" kk="price">价格
+                <i class="up"></i>
+                <i class="down"></i>
+            </a>
+            <button id="reset">还原</button>
+            <select name="" id="sele">
+                <option value="title">商品名搜索</option>
+                <option value="hot">商品热度搜索</option>
+                <option value="price">商品价格搜索</option>
+                <input type="text" id="txt">
+                <button id="find">搜索</button>
+            </select>
+            <span id="section">
+                最低价格：￥<input type="text" class="money"> —
+                ￥<input type="text" class="money"> ：最高价格
+                <button id="seek">查找</button>
+            </span>
+        </div>
+        <ul id="list">
+            <!-- <li>
+            <img src="img/1.jpg" alt="">
+            <span>华为畅享7（香槟金）</span>
+            <span>2018-01-01</span>
+            <span>1</span>
+            <span>992</span>
+        </li> -->
+        </ul>
+        <div id="go-top">
+            返回顶部
+        </div>
+    </div>
+    <script>
+        /*
+            1.先请求数据，渲染页面
+            2.排序
+            3.还原
+            4.延迟加载、防抖处理
+        */
+        fetch('json/product.json')
+            .then(e => e.json())
+            .then(data => {
+                data.push(...data, ...data);
+                let h = new ShopSort('.content', data)
+                h.rander(data)
+                h.events();
+            })
+        // class Tools {
+        //     po(ele) {
+        //         let obj = ele,
+        //             top = 0, left = 0;
+        //         while (obj) {
+        //             top += obj.offsetTop;
+        //             left += obj.offsetLeft;
+        //             obj = obj.offsetParent;
+        //         }
+        //         top -= ele.clientTop;
+        //         left -= ele.clientLeft;
+        //         //new Tools().po(ele).l
+        //         return {
+        //             top,
+        //             left
+        //         }
+        //     }
+        // }
+        class ShopSort {
+            constructor(id, data) {
+                this.content = document.querySelector(id);
+                this.list = document.querySelector('#list');
+                this.reset = document.querySelector('#reset');
+                this.sele = document.querySelector('#sele');
+                this.txt = document.querySelector('#txt');
+                this.find = document.querySelector('#find');
+                this.seek = document.querySelector('#seek');
+                this.as = this.content.querySelectorAll('.header>a');
+                this.is = this.content.querySelectorAll('.header i');
+                this.moneys = Array.from(this.content.querySelectorAll('#section .money'));
+                this.got = document.querySelector('#go-top');
+                this.arr = ['time', 'hot', 'price'];
+                this.cloneData = [...data]
+                this.data = data;
+            }
+            rander(n) {//刷新页面
+                let html = '';
+                n.forEach(item => {
+                    html += `<li>
+                    <img pic=${item.img} alt="">
+                    <span>${item.title}</span>
+                    <span>上架时间：${item.time}</span>
+                    <span>❤${item.hot}</span>
+                    <span>￥${item.price}</span>
+                </li>`
+                });
+                this.list.innerHTML = html;
+                this.lazyLoad();
+            }
+            events() {
+                let that = this;
+                this.as.forEach((e, i) => {//给每一个a标签绑定点击事件
+                    e.onOff = true;       //默认点击是上升排序，再次点击变成下降排序
+                    e.onclick = function () {
+                        if (e.onOff) {
+                            that.goUp(i);
+                            this.children[0].classList.add('bg');   //箭头变色处理
+                            this.children[1].classList.remove('bg')
+                        } else {
+                            that.goDown(i);
+                            this.children[0].classList.remove('bg')
+                            this.children[1].classList.add('bg')
+                        }
+                        this.onOff = !this.onOff;
+                        that.rander(that.cloneData)
+                    }
+                })
+                this.reset.onclick = function () {  //点击还原到最初的样式。因为cloneData已经是排序后的数组，
+                    that.rander(that.data);         //所以还原时要用最开始的data刷新页面
+                    that.is.forEach(e => {
+                        e.classList.remove('bg')
+                    })
+                }
+                this.find.onclick = function () {
+                    that.search();
+                }
+                this.seek.onclick = function () { //根据价格去加筛选
+                    that.middleMoney();
+                }
+                let timer = null;
+                let timer1 = null;
+                window.onscroll = function () {
+                    that.goTop();   //返回顶部
+                    clearTimeout(timer)
+                    timer = setTimeout(() => {
+                        that.lazyLoad();   //懒加载
+                    }, 100);
+                }
+                this.got.onclick = function () {
+                    let t = window.pageYOffset;
+                    timer1 = setInterval(() => {
+                        t -= 100;
+                        if (t <= 0) {
+                            t = 0;
+                            clearInterval(timer1);
+                        }
+                        window.scrollTo(0, t);
+                    }, 16.7);
+                }
+            }
+            goUp(i) {   //向上排序
+                this.cloneData.sort((a, b) => {
+                    if (this.arr[i] == 'time') {
+                        a = a[this.arr[i]].split('-').join('');
+                        b = b[this.arr[i]].split('-').join('');
+                    } else {
+                        a = a[this.arr[i]];
+                        b = b[this.arr[i]];
+
+                    }
+                    return a - b;
+                })
+            }
+            goDown(i) { //向下排序
+                this.cloneData.sort((a, b) => {
+                    if (this.arr[i] == 'time') {
+                        a = a[this.arr[i]].split('-').join('');
+                        b = b[this.arr[i]].split('-').join('');
+                    } else {
+                        a = a[this.arr[i]];
+                        b = b[this.arr[i]];
+
+                    }
+                    return b - a;
+                })
+            }
+            search() {
+                let val = this.txt.value;
+                let re = /华为|huawei|hw|荣耀/i;
+                let ary = [];
+                if (val) {
+                    if (re.test(val)) {
+                        ary = this.cloneData.filter(e => {
+                            return re.test(e[this.sele.value])
+                        })
+                    } else {
+                        ary = this.cloneData.filter(e => {
+                            return new RegExp(this.txt.value).test(e[this.sele.value])
+                        })
+                    }
+                    this.rander(ary);
+                }
+            }
+            middleMoney() { //根据价格区间筛选
+                if (this.moneys.every(e => e.value)) {
+                    this.rander(this.cloneData.filter(item => item.price >= this.moneys[0].value && item.price <= this.moneys[1].value))
+                } else if (this.moneys[0].value && !this.moneys[1].value) {
+                    this.rander(this.cloneData.filter(item => item.price >= this.moneys[0].value))
+                } else if (this.moneys[1].value && !this.moneys[0].value) {
+                    this.rander(this.cloneData.filter(item => item.price <= this.moneys[1].value))
+                }
+            }
+            lazyLoad() {  //懒加载
+                //实例化Tools
+                // let t = new Tools();
+                console.log(1)
+                // let scrollT = window.pageYOffset;
+                let winH = window.innerHeight;  //获取屏幕的高度
+                let imgs = document.querySelectorAll('img');
+                let len = imgs.length;
+                for (let i = 0; i < len; i++) {
+                    // if (scrollT + winH >= t.po(imgs[i]).top) {
+                    if (imgs[i].getBoundingClientRect().top < winH) {  //如果图片距离可视区窗口顶端的距离小于屏幕高度图片进行加载
+                        if (!imgs[i].src) {   //如果图片没有src路径时在进行判断，避免重复循环，节省性能
+                            let oimg = new Image();   //oimg是背锅侠，测试图片能否顺利加载
+                            oimg.src = imgs[i].getAttribute('pic');
+                            oimg.onload = function () {  //图片正常加载时，将pic的值赋值给src
+                                imgs[i].src = imgs[i].getAttribute('pic');
+                                setTimeout(() => {
+                                    imgs[i].style.opacity = 1;   //图片透明度 
+                                    imgs[i].removeAttribute('pic'); //将删除操作加入异步队列避免i值混乱
+                                }, 200);
+                            }
+                            oimg.onerror = function () {  //图片加载失败时
+                                imgs[i].src = 'img/timg.jpg';
+                                setTimeout(() => {
+                                    imgs[i].style.opacity = 1;
+                                    imgs[i].removeAttribute('pic')
+                                }, 200);
+                            }
+
+                        }
+                    }
+                }
+            }
+            goTop() {
+                if (window.pageYOffset >= 500) {
+                    this.got.style.display = 'block';
+                } else {
+                    this.got.style.display = 'none';
+                }
+            }
+
+
+        }
+
+    </script>
+</body>
+
+</html>
