@@ -59,10 +59,11 @@
     </div>
     <script>
         /*
-            1.先请求数据，渲染页面
+            1.先请求数据，进行结构的渲染，不需要渲染图片，所以一开始不要给图片设置src，节省性能
             2.排序
             3.还原
-            4.延迟加载、防抖处理
+            4.延迟加载、防抖处理 （延迟加载的判断条件可以利用绝对位置也可以利用getBoundingclientreat().top)
+            5.数据请求是异步事件，比正常的加载要慢，要注意这个问题
         */
         fetch('json/product.json')
             .then(e => e.json())
@@ -73,7 +74,7 @@
                 h.events();
             })
         // class Tools {
-        //     po(ele) {
+        //     po(ele) {  //求图片到页面顶端的绝对位置
         //         let obj = ele,
         //             top = 0, left = 0;
         //         while (obj) {
@@ -121,12 +122,12 @@
                 this.list.innerHTML = html;
                 this.lazyLoad();
             }
-            events() {
+            events() { // 事件
                 let that = this;
                 this.as.forEach((e, i) => {//给每一个a标签绑定点击事件
                     e.onOff = true;       //默认点击是上升排序，再次点击变成下降排序
                     e.onclick = function () {
-                        if (e.onOff) {
+                        if (this.onOff) {
                             that.goUp(i);
                             this.children[0].classList.add('bg');   //箭头变色处理
                             this.children[1].classList.remove('bg')
@@ -198,7 +199,7 @@
                     return b - a;
                 })
             }
-            search() {
+            search() {  // 查找
                 let val = this.txt.value;
                 let re = /华为|huawei|hw|荣耀/i;
                 let ary = [];
@@ -257,17 +258,14 @@
                     }
                 }
             }
-            goTop() {
+            goTop() {  //返回顶部
                 if (window.pageYOffset >= 500) {
                     this.got.style.display = 'block';
                 } else {
                     this.got.style.display = 'none';
                 }
             }
-
-
         }
-
     </script>
 </body>
 
