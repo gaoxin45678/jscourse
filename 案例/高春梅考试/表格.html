@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style type="text/css">
+		body,
+		h1 {
+			margin: 0;
+		}
+
+		ul {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		input {
+			outline: none;
+		}
+
+		table {
+			border-collapse: collapse;
+			border: #bbb;
+		}
+
+		body {
+			width: 100%;
+			height: 100%;
+			/*background: url(img/2.jpg) no-repeat;*/
+		}
+
+		.tBody {
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+			margin-top: 30px;
+			padding: 20px 30px 40px;
+			background-color: rgba(255, 255, 255, .6);
+		}
+
+		.title {
+			text-align: center;
+			color: #fca113;
+			text-shadow: 0 0 2px #fcf913;
+			line-height: 50px;
+		}
+
+		table {
+			background-color: #fff;
+		}
+
+		th {
+			background-color: #ddd;
+		}
+
+		tr {
+			height: 30px;
+		}
+
+		ul {
+			padding: 5px 0;
+			width: 600px;
+			text-align: center;
+		}
+
+		td {
+			text-align: center;
+		}
+
+		td input {
+			margin: 0 2px;
+		}
+
+		li {
+			padding: 5px 0;
+			overflow: hidden;
+		}
+
+		label {
+			display: inline-block;
+		}
+
+		input[type="text"] {
+			border: 1px solid #ccc;
+			width: 80px;
+			height: 20px;
+		}
+
+		#pagination {
+			text-align: center;
+			margin: 20px;
+		}
+
+		#pagination a {
+			text-decoration: none;
+			margin-right: 10px;
+			color: #000;
+		}
+
+		#pagination .active {
+			color: red;
+		}
+
+		/*#tab tbody tr:hover {
+	background-color: #f7cb75;
+}*/
+	</style>
+</head>
+
+<body>
+	<section class="tBody">
+		<h1 class="title"></h1>
+		<ul id="header">
+			<li class="addPre">
+				<label>名字： <input type="text" id="name" /></label>
+				<label>年龄： <input type="text" id="age" /></label>
+				<input type="button" value="添加" id="add" />
+			</li>
+			<li>
+				<span>排序</span>
+				<select id="s1">
+					<option value="price">年龄</option>
+					<option value="id">编号</option>
+				</select>
+				<select id="s2">
+					<option value="2">从高到底</option>
+					<option value="1">从低到高</option>
+				</select>
+				<input type="button" value="提交" id="stBtn" />
+				<input type="button" value="批量删除" id="rm" />
+			</li>
+		</ul>
+		<table id="tab" width="600" align="center" border="1">
+			<thead>
+				<th>全选<input type="checkbox" id="checkAll"></th>
+				<th index="id">编号</th>
+				<th>商品</th>
+				<th index="price">年龄</th>
+				<th>操作</th>
+			</thead>
+			<tbody>
+				<!-- <tr>
+				<td><input type="checkbox"></td>
+				<td>1</td>
+				<td>露露</td>
+				<td>12</td>
+				<td>
+					<input type="button" value="删除">
+					<input type="button" value="上移">
+					<input type="button" value="下移">
+				</td>
+			</tr> -->
+
+			</tbody>
+		</table>
+		<div id="pagination">
+			<!-- <a href="javascript:void(0)">&lt;</a>
+			<a href="javascript:void(0)">1</a>
+			<a href="javascript:void(0)">2</a>
+			<a href="javascript:void(0)">&gt;</a> -->
+		</div>
+	</section>
+</body>
+<script src="jquery-1.11.3.js"></script>
+<script>
+
+	/*
+		1.渲染数据
+		1.5 始终保持各行变色
+		2.添加内容
+		3.排序
+		4.选中
+		5.上移下移
+		6.删除
+		7.批量删除
+	*/
+	var data = [
+		{
+			'id': 1,
+			'name': 'momo',
+			'price': 36,
+			'checked': false
+		},
+		{
+			'id': 2,
+			'name': '小恋',
+			'price': 40,
+			'checked': false
+		},
+		{
+			'id': 3,
+			'name': 'yaya',
+			'price': 20,
+			'checked': false
+		},
+		{
+			'id': 4,
+			'name': 'feifei',
+			'price': 10,
+			'checked': false
+		},
+		{
+			'id': 5,
+			'name': 'hhehe',
+			'price': 35,
+			'checked': false
+		}
+	];
+
+	class Table {
+		constructor(data) {
+			this.data = data;
+			this.tbody = document.querySelector('tbody');
+			this.pagination = document.querySelector('#pagination');
+			this.add = document.querySelector('#add');
+			this.stBtn = document.querySelector('#stBtn');
+			this.rm = document.querySelector('#rm');
+			this.name = document.querySelector('#name');
+			this.age = document.querySelector('#age');
+			this.actions = document.querySelectorAll('.action');
+			this.s1 = document.querySelector('#s1');
+			this.s2 = document.querySelector('#s2');
+			this.checkAll = document.querySelector('#checkAll');
+			this.page = 1;
+			this.pageNumber = 1;
+		}
+		render() {
+			let html = '';
+			let that = this;
+			for (let i = (this.page - 1) * 4; i < this.page * 4; i++) {
+				if (this.data[i]) {
+					html += `<tr>
+				<td><input type="checkbox" class='bt'></td>
+				<td>${this.data[i].id}</td>
+				<td>${this.data[i].name}</td>
+				<td>${this.data[i].price}</td>
+				<td class="action" data-id="${this.data[i].id}">
+					<input type="button" value="删除">
+					<input type="button" value="上移">
+					<input type="button" value="下移">
+				</td>
+			</tr>`
+				}
+				this.tbody.innerHTML = html;
+				let inputChecked = document.querySelectorAll('.bt');
+				inputChecked.forEach((item, i) => {
+					item.checked = that.data[i].checked;
+					let o = false;
+					item.onclick = function () {
+						if (!o) {
+							that.data[i].checked = true;
+						} else {
+							that.data[i].checked = false;
+						}
+						o = !o;
+						that.selectAll();
+					}
+				})
+				this.selectAll();
+				this.color();
+				this.renderPage();
+				this.remove();
+			}
+		}
+		renderPage() {
+			let that = this;
+			this.pageNumber = Math.ceil(this.data.length / 4);
+			let cur = '<a href="javascript:void(0)">&lt;</a>';
+			for (let i = 0; i < this.pageNumber; i++) {
+				cur += `<a href="javascript:void(0)" class="${(i + 1) === this.page ? 'active' : ''}">${i + 1}</a>`
+			}
+			cur += `<a href="javascript:void(0)">&gt;</a>`;
+			this.pagination.innerHTML = cur;
+			//换页
+			this.pagination.onclick = function (ev) {
+				if (ev.target.tagName === 'A') {
+					if (ev.target.innerHTML === '&lt;') {
+						that.page--;
+						if (that.page < 1) that.page = 1;
+					} else if (ev.target.innerHTML === '&gt;') {
+						that.page++;
+						if (that.page > that.pageNumber) that.page = that.pageNumber;
+					} else {
+						let val = parseInt(ev.target.innerHTML);
+						that.page = val;
+					}
+					that.render();
+				}
+			}
+		}
+		color() {
+			$(function () {
+				$("tr:odd").attr("bgColor", "green");
+				$("tr:even").attr("bgColor", "yellow");
+			})
+		}
+		create() {
+			let that = this;
+			this.add.onclick = function () {
+				if (that.age.value && that.name.value) {
+					if (that.age.value * 1) {
+						that.data.push({
+							'id': +new Date,
+							'name': that.name.value,
+							'price': that.age.value,
+							'checked': false
+						});
+					} else if (that.age.value * 1) {
+						alert('年龄必须为数字')
+					};
+					that.page = that.pageNumber;
+					that.renderPage()
+					that.render();
+				} else {
+					alert('内容不能为空')
+				};
+			}
+		}
+		sort() {
+			let that = this;
+			this.stBtn.onclick = function () {
+				if (that.s2.value === '2') {
+					goDown(that.s1.value);
+				} else if (that.s2.value === '1') {
+					goUp(that.s1.value);
+				}
+				that.render();
+			}
+			function goUp(index) {   //向上排序
+				that.data.sort((a, b) => {
+					a = a[index];
+					b = b[index];
+					return a - b;
+				})
+			}
+			function goDown(index) { //向下排序
+				that.data.sort((a, b) => {
+					a = a[index];
+					b = b[index];
+					return b - a;
+				})
+			}
+		}
+		remove() {
+			let that = this;
+			let actions = document.querySelectorAll('.action');
+			actions.forEach((ele, i) => {
+				ele.onclick = function (ev) {
+					let temp = null;
+					if (ev.target.value === '删除') {
+						that.data.splice(i, 1)
+					} else if (ev.target.value === '上移') {
+						if (i > 0) {
+							temp = that.data[i];
+							that.data[i] = that.data[i - 1];
+							that.data[i - 1] = temp;
+						}
+					} else if (ev.target.value === '下移') {
+						if (i < that.data.length && that.data[i + 1]) {
+							temp = that.data[i];
+							that.data[i] = that.data[i + 1];
+							that.data[i + 1] = temp;
+						}
+					}
+					that.render();
+				}
+			})
+		}
+		batchRemove() {
+			let that = this;
+			this.rm.onclick = function () {
+				that.data = that.data.filter(item => {
+					return !item.checked
+				})
+				that.render();
+			}
+		}
+		selectAll() {
+			let ins = Array.from(document.querySelectorAll('.bt'));
+			let that = this;
+			let onOff = false;
+			this.checkAll.onclick = function () {
+				if (!onOff) {
+					ins.forEach((e, i) => {
+						that.data[i].checked = true;
+						e.checked = true;
+					});
+				} else {
+					ins.forEach((e, i) => {
+						that.data[i].checked = false;
+						e.checked = false;
+					});
+				}
+				onOff = !onOff;
+			}
+			if (ins.every(e => e.checked)) {
+				this.checkAll.checked = true;
+			} else {
+				this.checkAll.checked = false;
+			}
+		}
+		event() {
+			this.render();
+			this.create();
+			this.sort();
+			this.batchRemove()
+		}
+	}
+	let t = new Table(data);
+	t.event();
+
+
+
+
+
+
+
+
+
+</script>
+
+</html>
